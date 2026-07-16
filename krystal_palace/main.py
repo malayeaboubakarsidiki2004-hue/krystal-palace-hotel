@@ -405,9 +405,9 @@ def page_client():
     return open(TPL / "client.html", encoding="utf-8").read()
 
 
-@app.get("/Sidiki", response_class=HTMLResponse, tags=["Pages"])
+@app.get("/admin", response_class=HTMLResponse, tags=["Pages"])
 def page_admin():
-    return open(TPL / "Sidiki.html", encoding="utf-8").read()
+    return open(TPL / "admin.html", encoding="utf-8").read()
 
 # ══════════════════════════════════════════════════════════════════════════════
 # API PUBLIQUE — RÉSERVATION
