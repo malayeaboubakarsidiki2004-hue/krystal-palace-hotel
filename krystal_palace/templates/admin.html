@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Administration — Krystal Palace Hôtel Yaoundé v7 Hôtel Yaoundé</title>
+<title>Administration — Krystal Palace Hôtel Yaoundé</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='20' y='20' width='60' height='60' rx='8' transform='rotate(45 50 50)' fill='%230047FF'/%3E%3Ctext x='50' y='58' font-family='Georgia,serif' font-size='34' fill='%23fff' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 /* ═══════════════════════════════════════════════
@@ -12,15 +13,15 @@
    ═══════════════════════════════════════════════ */
 :root{
   --blue:#0047FF; --blue-l:#3A7BFF; --blue-d:#002299;
-  --blue-midnight:#000B2E; --blue-deep:#000E3A;
-  --blue-panel:#001155; --blue-card:#001A66;
+  --night:#000B2E; --blue-deep:#000E3A;
+  --panel:#001155; --card:#001A66;
   --gold:#C9A84C; --gold-l:#E8C97A; --gold-pale:#FDF0CC;
   --cream:#F0EDFF; --cream-2:#D8D4FF; --muted:#8899CC;
   --green:#2ECC71; --red:#E74C3C; --orange-money:#FF6600;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 
-body{font-family:'Jost',sans-serif;color:var(--cream);min-height:100vh;position:relative;background:var(--blue-midnight);}
+body{font-family:'Jost',sans-serif;color:var(--cream);min-height:100vh;position:relative;background:var(--night);}
 body::before{
   content:'';position:fixed;inset:0;
   background-image:
@@ -52,39 +53,72 @@ body>*{position:relative;z-index:1;}
 .btn-login:hover{background:linear-gradient(135deg,var(--blue-l),var(--gold-l));box-shadow:0 6px 28px rgba(0,71,255,0.55);}
 .login-error{color:var(--red);font-size:12px;margin-top:.5rem;display:none;}
 
-/* APP */
+/* APP — SHELL SIDEBAR PROFESSIONNEL */
 #app{display:none;}
-header{
-  background:linear-gradient(180deg,rgba(0,11,46,0.99),rgba(0,18,68,0.97));
-  border-bottom:1px solid rgba(0,71,255,0.3);
-  padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;
-  height:66px;position:sticky;top:0;z-index:50;
-  box-shadow:0 2px 35px rgba(0,71,255,0.15);
+.sidebar{
+  position:fixed;top:0;left:0;bottom:0;width:250px;z-index:60;
+  background:linear-gradient(180deg,rgba(0,11,46,0.99),rgba(0,17,85,0.98));
+  border-right:1px solid rgba(0,71,255,0.25);
+  display:flex;flex-direction:column;
+  box-shadow:2px 0 35px rgba(0,71,255,0.12);
 }
-header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--blue),var(--gold),var(--blue-l),var(--gold),var(--blue),transparent);}
-.logo{display:flex;align-items:center;gap:12px;}
-.logo-d{width:34px;height:34px;background:linear-gradient(135deg,var(--blue),var(--gold));transform:rotate(45deg);display:flex;align-items:center;justify-content:center;box-shadow:0 0 18px rgba(0,71,255,0.45);}
-.logo-d span{transform:rotate(-45deg);font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:#fff;}
-.logo-text h1{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:300;letter-spacing:.12em;color:var(--gold-l);}
-.logo-text p{font-size:9px;letter-spacing:.2em;color:var(--blue-l);text-transform:uppercase;}
-nav{display:flex;gap:4px;}
-nav button{background:transparent;border:none;color:var(--muted);padding:7px 14px;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border-radius:4px;transition:all .2s;}
-nav button:hover{color:var(--gold-l);}
-nav button.active{color:var(--blue-l);background:rgba(0,71,255,0.14);border:1px solid rgba(0,71,255,0.25);}
-.logout-btn{font-size:10px;letter-spacing:.12em;color:var(--muted);background:transparent;border:1px solid rgba(0,71,255,0.2);padding:6px 12px;border-radius:4px;cursor:pointer;font-family:'Jost',sans-serif;text-transform:uppercase;transition:all .2s;}
-.logout-btn:hover{color:var(--blue-l);border-color:rgba(0,71,255,0.5);}
+.sidebar::after{content:'';position:absolute;top:0;right:-1px;bottom:0;width:2px;
+  background:linear-gradient(180deg,transparent,var(--blue),var(--gold),var(--blue-l),var(--gold),var(--blue),transparent);}
+.logo{display:flex;align-items:center;gap:12px;padding:1.5rem 1.3rem 1.1rem;}
+.logo-d{width:38px;height:38px;flex:none;background:linear-gradient(135deg,var(--blue),var(--gold));transform:rotate(45deg);display:flex;align-items:center;justify-content:center;box-shadow:0 0 18px rgba(0,71,255,0.45);}
+.logo-d span{transform:rotate(-45deg);font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:#fff;}
+.logo-text h1{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:400;letter-spacing:.09em;color:var(--gold-l);line-height:1.25;}
+.logo-text p{font-size:8px;letter-spacing:.2em;color:var(--blue-l);text-transform:uppercase;margin-top:2px;}
+.sidebar-stars{text-align:center;color:var(--gold);font-size:10px;letter-spacing:3px;padding-bottom:1rem;border-bottom:1px solid rgba(0,71,255,0.15);margin:0 1.3rem;}
+nav{display:flex;flex-direction:column;gap:3px;padding:1.1rem .9rem;flex:1;}
+.nav-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);padding:0 .6rem;margin-bottom:.4rem;opacity:.7;}
+nav button{background:transparent;border:none;border-left:2px solid transparent;color:var(--muted);
+  padding:11px 14px;font-family:'Jost',sans-serif;font-size:12px;letter-spacing:.05em;text-align:left;
+  cursor:pointer;border-radius:0 6px 6px 0;transition:all .2s;display:flex;align-items:center;gap:10px;}
+nav button:hover{color:var(--cream);background:rgba(0,71,255,0.06);}
+nav button.active{color:var(--gold-l);background:rgba(0,71,255,0.14);border-left-color:var(--gold);font-weight:500;}
+.sidebar-foot{padding:1rem 1.3rem 1.3rem;border-top:1px solid rgba(0,71,255,0.15);}
+.sidebar-user{display:flex;align-items:center;gap:10px;margin-bottom:.9rem;}
+.sidebar-user-av{width:30px;height:30px;border-radius:50%;background:rgba(0,71,255,.15);border:1px solid rgba(0,71,255,.4);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--blue-l);font-weight:600;flex:none;}
+.sidebar-user div p:first-child{font-size:12px;color:var(--cream);font-weight:500;}
+.sidebar-user div p:last-child{font-size:10px;color:var(--muted);}
+.logout-btn{width:100%;font-size:10px;letter-spacing:.12em;color:var(--muted);background:transparent;border:1px solid rgba(0,71,255,0.25);padding:8px 12px;border-radius:6px;cursor:pointer;font-family:'Jost',sans-serif;text-transform:uppercase;transition:all .2s;}
+.logout-btn:hover{color:var(--red);border-color:rgba(231,76,60,.4);background:rgba(231,76,60,.06);}
 
-main{max-width:1400px;margin:0 auto;padding:1.5rem;}
+.content-wrapper{margin-left:250px;min-height:100vh;}
+.topbar{height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 1.8rem;
+  background:rgba(0,11,46,0.85);border-bottom:1px solid rgba(0,71,255,0.15);position:sticky;top:0;z-index:40;backdrop-filter:blur(6px);}
+.topbar-crumb{font-size:11px;color:var(--muted);letter-spacing:.05em;}
+.topbar-crumb b{color:var(--gold-l);font-weight:500;}
+.topbar-right{display:flex;align-items:center;gap:14px;font-size:11px;color:var(--muted);}
+.topbar-clock{font-variant-numeric:tabular-nums;color:var(--blue-l);}
+.topbar-live{display:flex;align-items:center;gap:6px;}
+.dot-live{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+
+main{max-width:1400px;margin:0 auto;padding:1.5rem 1.8rem;}
 .section{display:none;}.section.active{display:block;}
 .page-title{margin-bottom:1.5rem;padding-bottom:.8rem;border-bottom:1px solid rgba(0,71,255,0.2);}
 .page-title h2{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:300;letter-spacing:.05em;color:var(--gold-l);}
 .page-title p{font-size:12px;color:var(--muted);margin-top:3px;letter-spacing:.06em;}
 
+@media(max-width:900px){
+  .sidebar{width:100%;height:auto;position:relative;flex-direction:row;align-items:center;flex-wrap:wrap;padding:.4rem 0;}
+  .sidebar::after{display:none;}
+  .content-wrapper{margin-left:0;}
+  .logo{padding:.6rem .9rem;}
+  .sidebar-stars{display:none;}
+  nav{flex-direction:row;flex:none;padding:.4rem;overflow-x:auto;}
+  nav button{padding:6px 10px;font-size:9px;white-space:nowrap;border-left:none;border-bottom:2px solid transparent;}
+  nav button.active{border-left:none;border-bottom-color:var(--gold);}
+  .sidebar-foot{display:none;}
+}
+
 /* GRIDS */
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
 .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
 .g6{display:grid;grid-template-columns:repeat(6,1fr);gap:1rem;}
-@media(max-width:900px){.g2,.g3,.g6{grid-template-columns:1fr 1fr;}nav button{padding:6px 8px;font-size:9px;}}
+@media(max-width:900px){.g2,.g3,.g6{grid-template-columns:1fr 1fr;}}
 @media(max-width:600px){.g2,.g3,.g6{grid-template-columns:1fr;}}
 
 /* CARDS */
@@ -225,19 +259,36 @@ hr{border:none;border-top:1px solid rgba(0,71,255,.1);margin:1rem 0;}
 
 <!-- APP -->
 <div id="app">
-  <header>
+  <aside class="sidebar">
     <div class="logo">
       <div class="logo-d"><span>K</span></div>
-      <div class="logo-text"><h1>KRYSTAL PALACE YAOUNDÉ</h1><p>Administration · Accueil · BACnet/YABE</p></div>
+      <div class="logo-text"><h1>KRYSTAL PALACE<br>YAOUNDÉ</h1><p>Administration</p></div>
     </div>
+    <div class="sidebar-stars">★ ★ ★ ★ ★</div>
     <nav>
+      <div class="nav-label">Pilotage</div>
       <button class="active" onclick="go('accueil')">Tableau de bord</button>
       <button onclick="go('enregistrer')">✦ Enregistrer</button>
       <button onclick="go('sejours')">Séjours</button>
       <button onclick="go('clients')">Clients</button>
     </nav>
-    <button class="logout-btn" onclick="logout()">Déconnexion</button>
-  </header>
+    <div class="sidebar-foot">
+      <div class="sidebar-user">
+        <div class="sidebar-user-av">AD</div>
+        <div><p>Administrateur</p><p>Accueil · BACnet/YABE</p></div>
+      </div>
+      <button class="logout-btn" onclick="logout()">Déconnexion</button>
+    </div>
+  </aside>
+
+  <div class="content-wrapper">
+    <div class="topbar">
+      <div class="topbar-crumb">Krystal Palace Hôtel Yaoundé · <b id="crumb-page">Tableau de bord</b></div>
+      <div class="topbar-right">
+        <div class="topbar-live"><span class="dot-live"></span>Système actif</div>
+        <div class="topbar-clock" id="topbar-clock">—</div>
+      </div>
+    </div>
 
   <main>
 
@@ -446,6 +497,7 @@ hr{border:none;border-top:1px solid rgba(0,71,255,.1);margin:1rem 0;}
       </div>
     </div>
   </main>
+  </div>
 </div>
 
 <div id="toast"></div>
@@ -515,15 +567,23 @@ async function login(){
 function logout(){auth=null;el('login-screen').style.display='flex';el('app').style.display='none';el('lu').value='';el('lp').value='';}
 
 // ── Navigation ────────────────────────────────────────────────────────────────
+const PAGE_LABELS={accueil:'Tableau de bord',enregistrer:'Enregistrement',sejours:'Séjours',clients:'Clients'};
 function go(id){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   el(id).classList.add('active');
   const tabs=['accueil','enregistrer','sejours','clients'];
   document.querySelectorAll('nav button').forEach((b,i)=>b.classList.toggle('active',tabs[i]===id));
+  el('crumb-page').textContent=PAGE_LABELS[id]||id;
   if(id==='sejours') loadRes();
   if(id==='clients') loadClients();
   if(id==='accueil') loadAll();
 }
+
+// ── Horloge temps réel (barre supérieure) ──────────────────────────────────────
+function tickClock(){
+  el('topbar-clock').textContent=new Date().toLocaleString('fr-FR',{weekday:'short',day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+}
+tickClock();setInterval(tickClock,30000);
 
 // ── API ───────────────────────────────────────────────────────────────────────
 async function api(m,url,body){
