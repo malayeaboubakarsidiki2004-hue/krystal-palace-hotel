@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "krystal-palace"
+version = "7.1.0"
+description = "Krystal Palace Hôtel Yaoundé — PMS-GTC v7 (FastAPI + PostgreSQL + BACnet/IP + Orange Money)"
+requires-python = ">=3.11"
+
+# Les dépendances réelles restent dans requirements.txt /
+# gateway/requirements_gateway.txt (c'est ce que le guide fait installer).
+# Ce fichier sert uniquement à déclarer krystal_palace comme package Python
+# installable, ce qui est nécessaire pour :
+#   1. que PyCharm résolve correctement les imports (krystal_palace.main,
+#      krystal_palace.gateway.main, etc.) sans avertissement "unresolved reference" ;
+#   2. que les imports relatifs dans krystal_palace/gateway/*.py
+#      (ex. `from .config import ...`) fonctionnent, y compris lancés
+#      hors PyCharm avec `python -m uvicorn ...` depuis n'importe quel dossier.
+
+[tool.setuptools.packages.find]
+include = ["krystal_palace*"]

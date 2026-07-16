@@ -1,0 +1,9 @@
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.env
+.idea/workspace.xml
+.idea/tasks.xml
+*.db
+*.log

@@ -1,0 +1,255 @@
+### ══════════════════════════════════════════════════════════════════════════════
+### api_tests.http — Tests API Krystal Palace v7
+### PyCharm Community 2024 : ouvrir ce fichier → bouton ▶ à gauche de chaque requête
+### ══════════════════════════════════════════════════════════════════════════════
+
+@base = http://127.0.0.1:8000
+@admin_auth = Basic YWRtaW46a3J5c3RhbDIwMjQ=
+
+### ── 1. SANTÉ ────────────────────────────────────────────────────────────────
+
+### Vérifier que le serveur fonctionne
+GET {{base}}/api/health
+
+### ── 2. RÉSERVATION PUBLIQUE ────────────────────────────────────────────────
+
+### Créer une réservation (étape 3 du wizard)
+POST {{base}}/api/reserver
+Content-Type: application/json
+
+{
+  "nom": "MBALLA",
+  "prenom": "Jean-Pierre",
+  "cni": "CMR-123456789",
+  "telephone": "+237 690 000 001",
+  "email": "jp.mballa@gmail.com",
+  "nationalite": "Camerounaise",
+  "type_chambre": "Suite Prestige",
+  "arrivee": "2025-12-20",
+  "depart": "2025-12-23",
+  "observations": "Arrivée tardive après 22h"
+}
+
+### ── 3. PAIEMENT ORANGE MONEY ───────────────────────────────────────────────
+
+### Enregistrer un paiement Orange Money (étape 4)
+POST {{base}}/api/paiement
+Content-Type: application/json
+
+{
+  "reservation_id": 1,
+  "mode": "orange_money",
+  "reference_om": "OM251220ABCD1234",
+  "numero_recepteur": "+237655448731",
+  "montant": 285000
+}
+
+### ── 4. ESPACE CLIENT (Page 0) ──────────────────────────────────────────────
+
+### Page 0 : ouvrir dans un navigateur (lien généré dans la facture PDF via ?ref=)
+GET {{base}}/?ref=RES-20251220120000
+
+### Accéder à l'espace client (vérifier ref + CNI)
+GET {{base}}/api/ma-reservation?ref=RES-20251220120000&cni=CMR-123456789
+
+### Simuler une annulation (avant confirmation)
+GET {{base}}/api/simuler-annulation?ref=RES-20251220120000&cni=CMR-123456789
+
+### Annuler une réservation
+POST {{base}}/api/annuler
+Content-Type: application/json
+
+{
+  "ref": "RES-20251220120000",
+  "cni": "CMR-123456789",
+  "motif": "Changement de plans"
+}
+
+### Modifier les dates d'une réservation
+POST {{base}}/api/modifier
+Content-Type: application/json
+
+{
+  "ref": "RES-20251220120000",
+  "cni": "CMR-123456789",
+  "nouvel_arrivee": "2025-12-22",
+  "nouvel_depart": "2025-12-25",
+  "observations": "Nouvelles dates"
+}
+
+### ── 5. ADMINISTRATION ───────────────────────────────────────────────────────
+
+### Statistiques globales
+GET {{base}}/api/admin/stats
+Authorization: {{admin_auth}}
+
+### Toutes les réservations
+GET {{base}}/api/admin/reservations
+Authorization: {{admin_auth}}
+
+### Tous les clients
+GET {{base}}/api/admin/clients
+Authorization: {{admin_auth}}
+
+### Créer un client manuellement
+POST {{base}}/api/admin/clients
+Authorization: {{admin_auth}}
+Content-Type: application/json
+
+{
+  "nom": "ATANGANA",
+  "prenom": "Sandrine",
+  "cni": "CMR-555111222",
+  "telephone": "+237 699 000 003",
+  "email": "sandrine.atangana@test.cm",
+  "nationalite": "Camerounaise"
+}
+
+### Supprimer un client
+DELETE {{base}}/api/admin/clients/99
+Authorization: {{admin_auth}}
+
+### Check-In (bouton vert → active HVAC via BACnet/YABE)
+PATCH {{base}}/api/admin/reservations/1
+Authorization: {{admin_auth}}
+Content-Type: application/json
+
+{
+  "statut": "En cours",
+  "ref_chambre": "CH-305",
+  "ref_climatisation": "AC-305"
+}
+
+### Check-Out (bouton rouge → arrête HVAC)
+PATCH {{base}}/api/admin/reservations/1
+Authorization: {{admin_auth}}
+Content-Type: application/json
+
+{
+  "statut": "Terminee"
+}
+
+### Enregistrement manuel à la réception
+POST {{base}}/api/admin/enregistrer
+Authorization: {{admin_auth}}
+Content-Type: application/json
+
+{
+  "nom": "NGUEMO",
+  "prenom": "Estelle",
+  "cni": "CMR-987654321",
+  "telephone": "+237 677 000 002",
+  "email": "estelle@test.cm",
+  "nationalite": "Camerounaise",
+  "type_chambre": "Superieure",
+  "arrivee": "2025-12-25",
+  "depart": "2025-12-27",
+  "ref_chambre": "CH-201",
+  "ref_climatisation": "AC-201",
+  "statut": "Confirmee",
+  "reference_om": "OM251225XYZ9876"
+}
+
+### Supprimer une réservation
+DELETE {{base}}/api/admin/reservations/99
+Authorization: {{admin_auth}}
+
+### ── 6. PASSERELLE BACNET (gateway, port 8001) ──────────────────────────────
+### À tester séparément : la gateway doit tourner (▶ Gateway BACnet (port 8001))
+### et YABE doit être lancé avec le Device 1001 configuré (voir le guide).
+
+@gateway = http://127.0.0.1:8001
+@gw_token = secret-gateway-token
+
+### Santé de la gateway + liste des jobs planifiés (APScheduler)
+GET {{gateway}}/health
+
+### Webhook RESERVATION_CONFIRMEE (planifie le préconditionnement HVAC)
+POST {{gateway}}/webhook/reservation
+X-Gateway-Token: {{gw_token}}
+Content-Type: application/json
+
+{
+  "evenement": "RESERVATION_CONFIRMEE",
+  "ref": "RES-TEST-0001",
+  "type_chambre": "Suite Prestige",
+  "numero": "305",
+  "arrivee": "2025-12-20",
+  "depart": "2025-12-23"
+}
+
+### Webhook MODIFICATION (annule les anciens jobs, replanifie sur les nouvelles dates)
+POST {{gateway}}/webhook/reservation
+X-Gateway-Token: {{gw_token}}
+Content-Type: application/json
+
+{
+  "evenement": "MODIFICATION",
+  "ref": "RES-TEST-0001",
+  "type_chambre": "Suite Prestige",
+  "numero": "305",
+  "arrivee": "2025-12-22",
+  "depart": "2025-12-25"
+}
+
+### Webhook CHECK_IN (déclenche immédiatement la climatisation)
+POST {{gateway}}/webhook/reservation
+X-Gateway-Token: {{gw_token}}
+Content-Type: application/json
+
+{
+  "evenement": "CHECK_IN",
+  "ref": "RES-TEST-0001",
+  "type_chambre": "Suite Prestige",
+  "numero": "305",
+  "arrivee": "2025-12-22",
+  "depart": "2025-12-25"
+}
+
+### Webhook CHECK_OUT (arrête la climatisation)
+POST {{gateway}}/webhook/reservation
+X-Gateway-Token: {{gw_token}}
+Content-Type: application/json
+
+{
+  "evenement": "CHECK_OUT",
+  "ref": "RES-TEST-0001",
+  "type_chambre": "Suite Prestige",
+  "numero": "305",
+  "arrivee": "2025-12-22",
+  "depart": "2025-12-25"
+}
+
+### Webhook ANNULATION (supprime les jobs planifiés)
+POST {{gateway}}/webhook/reservation
+X-Gateway-Token: {{gw_token}}
+Content-Type: application/json
+
+{
+  "evenement": "ANNULATION",
+  "ref": "RES-TEST-0001",
+  "type_chambre": "Suite Prestige",
+  "numero": "305",
+  "arrivee": "2025-12-22",
+  "depart": "2025-12-25"
+}
+
+### Attribuer un numéro de chambre après coup (admin l'assigne plus tard)
+POST {{gateway}}/webhook/attribuer_chambre
+X-Gateway-Token: {{gw_token}}
+Content-Type: application/json
+
+{
+  "ref": "RES-TEST-0001",
+  "numero": "305",
+  "arrivee": "2025-12-22",
+  "depart": "2025-12-25"
+}
+
+### Test manuel : démarrer la climatisation d'une chambre via YABE
+POST {{gateway}}/test/demarrer/305
+X-Gateway-Token: {{gw_token}}
+
+### Test manuel : arrêter la climatisation d'une chambre via YABE
+POST {{gateway}}/test/arreter/305
+X-Gateway-Token: {{gw_token}}

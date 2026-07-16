@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Administration — Krystal Palace Hôtel Yaoundé v7 Hôtel Yaoundé</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════
+   THÈME BLEU ÉLECTRIQUE PRESTIGE — OR 5 ÉTOILES
+   Interface Administrateur — Krystal Palace
+   ═══════════════════════════════════════════════ */
+:root{
+  --blue:#0047FF; --blue-l:#3A7BFF; --blue-d:#002299;
+  --blue-midnight:#000B2E; --blue-deep:#000E3A;
+  --blue-panel:#001155; --blue-card:#001A66;
+  --gold:#C9A84C; --gold-l:#E8C97A; --gold-pale:#FDF0CC;
+  --cream:#F0EDFF; --cream-2:#D8D4FF; --muted:#8899CC;
+  --green:#2ECC71; --red:#E74C3C; --orange-money:#FF6600;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+
+body{font-family:'Jost',sans-serif;color:var(--cream);min-height:100vh;position:relative;background:var(--blue-midnight);}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:
+    radial-gradient(ellipse at 10% 20%,rgba(0,71,255,0.15) 0%,transparent 50%),
+    radial-gradient(ellipse at 90% 80%,rgba(0,71,255,0.10) 0%,transparent 50%),
+    radial-gradient(ellipse at 50% 50%,rgba(201,168,76,0.03) 0%,transparent 60%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='rgba(0,71,255,0.055)' stroke-width='0.6'%3E%3Crect x='10' y='10' width='100' height='100' rx='2'/%3E%3Crect x='25' y='25' width='70' height='70' rx='1'/%3E%3Cline x1='10' y1='10' x2='25' y2='25'/%3E%3Cline x1='110' y1='10' x2='95' y2='25'/%3E%3Cline x1='10' y1='110' x2='25' y2='95'/%3E%3Cline x1='110' y1='110' x2='95' y2='95'/%3E%3Ccircle cx='60' cy='60' r='10' stroke='rgba(201,168,76,0.05)'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:auto,auto,auto,120px 120px;
+  pointer-events:none;z-index:0;
+}
+body>*{position:relative;z-index:1;}
+
+/* LOGIN */
+#login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;}
+.login-box{
+  background:linear-gradient(135deg,rgba(0,14,58,0.98),rgba(0,22,80,0.99));
+  border:1px solid rgba(0,71,255,0.35);border-radius:12px;
+  padding:2.8rem 2.2rem;width:360px;text-align:center;
+  box-shadow:0 0 70px rgba(0,71,255,0.2),inset 0 0 40px rgba(201,168,76,0.02);
+}
+.login-box h2{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--gold-l);margin-bottom:.3rem;}
+.login-box p{font-size:11px;color:var(--muted);letter-spacing:.1em;margin-bottom:1.6rem;}
+.login-stars{color:var(--gold);font-size:13px;letter-spacing:4px;margin-bottom:1.4rem;}
+.lg{margin-bottom:1rem;text-align:left;}
+.lg label{display:block;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.lg input{width:100%;background:rgba(0,14,58,0.95);border:1px solid rgba(0,71,255,0.25);color:var(--cream);font-family:'Jost',sans-serif;font-size:15px;padding:12px 14px;border-radius:7px;outline:none;transition:border-color .2s,box-shadow .2s;}
+.lg input:focus{border-color:var(--blue);box-shadow:0 0 16px rgba(0,71,255,0.22);}
+.btn-login{width:100%;padding:14px;background:linear-gradient(135deg,var(--blue),var(--gold));color:#fff;font-family:'Jost',sans-serif;font-size:12px;letter-spacing:.15em;text-transform:uppercase;font-weight:600;border:none;border-radius:7px;cursor:pointer;margin-top:.5rem;transition:all .2s;box-shadow:0 4px 22px rgba(0,71,255,0.4);}
+.btn-login:hover{background:linear-gradient(135deg,var(--blue-l),var(--gold-l));box-shadow:0 6px 28px rgba(0,71,255,0.55);}
+.login-error{color:var(--red);font-size:12px;margin-top:.5rem;display:none;}
+
+/* APP */
+#app{display:none;}
+header{
+  background:linear-gradient(180deg,rgba(0,11,46,0.99),rgba(0,18,68,0.97));
+  border-bottom:1px solid rgba(0,71,255,0.3);
+  padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;
+  height:66px;position:sticky;top:0;z-index:50;
+  box-shadow:0 2px 35px rgba(0,71,255,0.15);
+}
+header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--blue),var(--gold),var(--blue-l),var(--gold),var(--blue),transparent);}
+.logo{display:flex;align-items:center;gap:12px;}
+.logo-d{width:34px;height:34px;background:linear-gradient(135deg,var(--blue),var(--gold));transform:rotate(45deg);display:flex;align-items:center;justify-content:center;box-shadow:0 0 18px rgba(0,71,255,0.45);}
+.logo-d span{transform:rotate(-45deg);font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:#fff;}
+.logo-text h1{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:300;letter-spacing:.12em;color:var(--gold-l);}
+.logo-text p{font-size:9px;letter-spacing:.2em;color:var(--blue-l);text-transform:uppercase;}
+nav{display:flex;gap:4px;}
+nav button{background:transparent;border:none;color:var(--muted);padding:7px 14px;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border-radius:4px;transition:all .2s;}
+nav button:hover{color:var(--gold-l);}
+nav button.active{color:var(--blue-l);background:rgba(0,71,255,0.14);border:1px solid rgba(0,71,255,0.25);}
+.logout-btn{font-size:10px;letter-spacing:.12em;color:var(--muted);background:transparent;border:1px solid rgba(0,71,255,0.2);padding:6px 12px;border-radius:4px;cursor:pointer;font-family:'Jost',sans-serif;text-transform:uppercase;transition:all .2s;}
+.logout-btn:hover{color:var(--blue-l);border-color:rgba(0,71,255,0.5);}
+
+main{max-width:1400px;margin:0 auto;padding:1.5rem;}
+.section{display:none;}.section.active{display:block;}
+.page-title{margin-bottom:1.5rem;padding-bottom:.8rem;border-bottom:1px solid rgba(0,71,255,0.2);}
+.page-title h2{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:300;letter-spacing:.05em;color:var(--gold-l);}
+.page-title p{font-size:12px;color:var(--muted);margin-top:3px;letter-spacing:.06em;}
+
+/* GRIDS */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+.g6{display:grid;grid-template-columns:repeat(6,1fr);gap:1rem;}
+@media(max-width:900px){.g2,.g3,.g6{grid-template-columns:1fr 1fr;}nav button{padding:6px 8px;font-size:9px;}}
+@media(max-width:600px){.g2,.g3,.g6{grid-template-columns:1fr;}}
+
+/* CARDS */
+.card{background:linear-gradient(135deg,rgba(0,14,58,0.96),rgba(0,22,80,0.98));border:1px solid rgba(0,71,255,0.15);border-radius:10px;padding:1.3rem;margin-bottom:1.3rem;}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--gold-l);margin-bottom:1rem;display:flex;align-items:center;gap:8px;}
+.card-title::before{content:'◆';font-size:10px;color:var(--blue-l);}
+
+/* STATS */
+.sc{background:linear-gradient(135deg,rgba(0,14,58,0.96),rgba(0,22,80,0.98));border:1px solid rgba(0,71,255,0.12);border-radius:10px;padding:1.1rem;text-align:center;}
+.sv{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:var(--blue-l);line-height:1;}
+.sl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-top:5px;}
+
+/* FORMS */
+.fg{margin-bottom:.75rem;}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;}
+.fr3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem;}
+@media(max-width:600px){.fr,.fr3{grid-template-columns:1fr;}}
+label{display:block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.req{color:var(--blue-l);}
+input,select,textarea{width:100%;background:rgba(0,14,58,0.95);border:1px solid rgba(0,71,255,0.2);color:var(--cream);font-family:'Jost',sans-serif;font-size:13px;padding:9px 12px;border-radius:6px;outline:none;transition:border-color .2s,box-shadow .2s;}
+input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 14px rgba(0,71,255,0.2);}
+input::placeholder{color:rgba(136,153,204,0.35);}
+select option{background:#001155;}
+textarea{resize:vertical;min-height:65px;}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border:none;border-radius:5px;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .2s;}
+.btn-gold{background:linear-gradient(135deg,var(--blue),var(--gold));color:#fff;font-weight:600;box-shadow:0 3px 16px rgba(0,71,255,0.35);}
+.btn-gold:hover{background:linear-gradient(135deg,var(--blue-l),var(--gold-l));box-shadow:0 5px 22px rgba(0,71,255,0.5);}
+.btn-out{background:transparent;border:1px solid rgba(0,71,255,0.3);color:var(--blue-l);}
+.btn-out:hover{border-color:var(--blue);background:rgba(0,71,255,0.08);}
+.btn-dng{background:rgba(192,57,43,.15);border:1px solid rgba(192,57,43,.35);color:var(--red);}
+.btn-dng:hover{background:rgba(192,57,43,.25);}
+.sm{padding:5px 11px;font-size:10px;}.xs{padding:3px 8px;font-size:9px;}
+.bg{display:flex;gap:8px;flex-wrap:wrap;margin-top:.8rem;}
+
+/* TABLES */
+.tw{overflow-x:auto;border:1px solid rgba(0,71,255,0.15);border-radius:8px;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+thead{background:rgba(0,71,255,0.1);border-bottom:1px solid rgba(0,71,255,0.2);}
+th{padding:10px 12px;text-align:left;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--blue-l);font-weight:400;white-space:nowrap;}
+td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.03);color:var(--cream-2);vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(0,71,255,0.04);}
+.ta{display:flex;gap:4px;flex-wrap:nowrap;}
+.tg{font-family:'Cormorant Garamond',serif;color:var(--gold-l);font-size:13px;}
+.tm{color:var(--muted);font-size:11px;}
+
+/* BADGES */
+.badge{display:inline-block;padding:2px 8px;border-radius:2px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;white-space:nowrap;}
+.b-gold{background:rgba(201,168,76,.15);color:var(--gold);border:1px solid rgba(201,168,76,.3);}
+.b-ok{background:rgba(26,107,58,.18);color:var(--green);border:1px solid rgba(46,204,113,.3);}
+.b-mut{background:rgba(136,136,200,.12);color:var(--muted);border:1px solid rgba(136,136,200,.2);}
+.b-dng{background:rgba(192,57,43,.12);color:var(--red);border:1px solid rgba(231,76,60,.3);}
+.b-pay{background:rgba(255,102,0,.15);color:#FF8833;border:1px solid rgba(255,102,0,.3);}
+.b-blue{background:rgba(0,71,255,.15);color:var(--blue-l);border:1px solid rgba(0,71,255,.3);}
+
+/* TOAST */
+#toast{position:fixed;bottom:1.5rem;right:1.5rem;background:rgba(0,14,58,0.98);border:1px solid rgba(0,71,255,.3);color:var(--cream);padding:.8rem 1.2rem;border-radius:7px;font-size:12px;z-index:9999;transform:translateY(80px);opacity:0;transition:all .3s;max-width:300px;}
+#toast.show{transform:translateY(0);opacity:1;}
+#toast.success{border-color:rgba(46,204,113,.5);}
+#toast.error{border-color:rgba(231,76,60,.5);}
+
+/* MODALS */
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:500;align-items:center;justify-content:center;padding:1rem;}
+.ov.show{display:flex;}
+.mb{background:linear-gradient(135deg,rgba(0,14,58,0.99),rgba(0,22,80,0.99));border:1px solid rgba(0,71,255,.3);border-radius:10px;padding:1.8rem;width:100%;max-height:92vh;overflow-y:auto;}
+.mb.sm{max-width:390px;}.mb.md{max-width:620px;}.mb.lg{max-width:900px;}
+.mh{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.2rem;padding-bottom:.8rem;border-bottom:1px solid rgba(0,71,255,.15);}
+.mh h3{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--gold-l);}
+.mx{background:none;border:none;color:var(--muted);font-size:24px;cursor:pointer;line-height:1;padding:0 4px;}
+.mx:hover{color:var(--cream);}
+.mf{display:flex;gap:8px;justify-content:flex-end;margin-top:1.2rem;padding-top:.8rem;border-top:1px solid rgba(0,71,255,.1);}
+
+/* FICHE */
+.fg2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.2rem;}
+@media(max-width:600px){.fg2{grid-template-columns:1fr;}}
+.fs{background:rgba(0,14,58,0.95);border:1px solid rgba(0,71,255,.12);border-radius:7px;padding:1rem;}
+.fs h4{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue-l);margin-bottom:.8rem;}
+.frow{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.frow:last-child{border-bottom:none;}
+.fk{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;}
+.fv{font-size:13px;color:var(--cream);text-align:right;}
+.fv.gold{color:var(--gold-l);font-family:'Cormorant Garamond',serif;font-size:16px;}
+.fv.big{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gold-l);}
+
+/* ENREGISTREMENT PANEL */
+.ep{background:linear-gradient(135deg,rgba(0,14,58,0.97),rgba(0,22,80,0.98));border:1px solid rgba(0,71,255,.25);border-radius:10px;padding:1.6rem;box-shadow:inset 0 0 40px rgba(0,71,255,0.03);}
+.ebloc{margin-bottom:1.2rem;padding-bottom:1.2rem;border-bottom:1px solid rgba(0,71,255,.1);}
+.ebloc:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.etitle{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue-l);margin-bottom:.8rem;display:flex;align-items:center;gap:8px;}
+.etitle::before{content:'';display:block;width:20px;height:1px;background:linear-gradient(90deg,var(--blue),var(--gold));}
+#calc-box{background:rgba(0,71,255,.08);border:1px solid rgba(0,71,255,.2);border-radius:7px;padding:.8rem 1rem;margin-top:.8rem;display:none;}
+.big-money{font-family:'Cormorant Garamond',serif;font-size:30px;color:var(--gold-l);}
+#enreg-ok{display:none;margin-top:1rem;background:rgba(46,204,113,.08);border:1px solid rgba(46,204,113,.3);border-radius:7px;padding:1rem;}
+hr{border:none;border-top:1px solid rgba(0,71,255,.1);margin:1rem 0;}
+
+/* OM INFO BADGE dans fiche */
+.om-ref-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,102,0,.12);border:1px solid rgba(255,102,0,.35);border-radius:4px;padding:4px 10px;font-size:10px;color:#FF8833;}
+
+/* ── Boutons Check-In / Check-Out ─────────────────────────────────────── */
+.btn-checkin{background:linear-gradient(135deg,#1A6B3A,#27AE60);color:#fff;border:none;
+  padding:4px 10px;border-radius:4px;font-size:9px;letter-spacing:.08em;text-transform:uppercase;
+  cursor:pointer;font-family:'Jost',sans-serif;font-weight:600;
+  box-shadow:0 2px 8px rgba(39,174,96,.4);}
+.btn-checkin:hover{background:linear-gradient(135deg,#27AE60,#2ECC71);}
+.btn-checkout{background:linear-gradient(135deg,#7B0000,#E74C3C);color:#fff;border:none;
+  padding:4px 10px;border-radius:4px;font-size:9px;letter-spacing:.08em;text-transform:uppercase;
+  cursor:pointer;font-family:'Jost',sans-serif;font-weight:600;
+  box-shadow:0 2px 8px rgba(231,76,60,.4);}
+.btn-checkout:hover{background:linear-gradient(135deg,#E74C3C,#FF6B6B);}
+.b-checkin{background:rgba(39,174,96,.15);color:#2ECC71;border:1.5px solid rgba(39,174,96,.5);
+  padding:3px 10px;border-radius:3px;font-size:9px;letter-spacing:.08em;font-weight:700;}
+.b-checkout{background:rgba(231,76,60,.12);color:#E74C3C;border:1.5px solid rgba(231,76,60,.4);
+  padding:3px 10px;border-radius:3px;font-size:9px;letter-spacing:.08em;font-weight:700;}
+
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div style="margin-bottom:1rem;">
+      <div style="width:50px;height:50px;background:linear-gradient(135deg,var(--blue),var(--gold));transform:rotate(45deg);display:inline-flex;align-items:center;justify-content:center;box-shadow:0 0 25px rgba(0,71,255,0.55);">
+        <span style="transform:rotate(-45deg);font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;color:#fff;">K</span>
+      </div>
+    </div>
+    <h2>Administration</h2>
+    <p>KRYSTAL PALACE HÔTEL YAOUNDÉ</p>
+    <div class="login-stars">★ ★ ★ ★ ★</div>
+    <div class="lg"><label>Identifiant</label><input type="text" id="lu" placeholder="admin" autocomplete="username"></div>
+    <div class="lg"><label>Mot de passe</label><input type="password" id="lp" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')login()"></div>
+    <button class="btn-login" onclick="login()">Accéder au tableau de bord</button>
+    <div class="login-error" id="lerr">Identifiants incorrects.</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <header>
+    <div class="logo">
+      <div class="logo-d"><span>K</span></div>
+      <div class="logo-text"><h1>KRYSTAL PALACE YAOUNDÉ</h1><p>Administration · Accueil · BACnet/YABE</p></div>
+    </div>
+    <nav>
+      <button class="active" onclick="go('accueil')">Tableau de bord</button>
+      <button onclick="go('enregistrer')">✦ Enregistrer</button>
+      <button onclick="go('sejours')">Séjours</button>
+      <button onclick="go('clients')">Clients</button>
+    </nav>
+    <button class="logout-btn" onclick="logout()">Déconnexion</button>
+  </header>
+
+  <main>
+
+    <!-- ══ TABLEAU DE BORD ══ -->
+    <div id="accueil" class="section active">
+      <div class="page-title"><h2>Tableau de bord</h2><p>Vue d'ensemble en temps réel · Krystal Palace Hôtel Yaoundé ★★★★★</p></div>
+      <div class="g6" style="margin-bottom:1.5rem;">
+        <div class="sc"><div class="sv" id="s-cl">—</div><div class="sl">Clients</div></div>
+        <div class="sc"><div class="sv" id="s-res">—</div><div class="sl">Réservations</div></div>
+        <div class="sc"><div class="sv" id="s-ec">—</div><div class="sl">En cours</div></div>
+        <div class="sc"><div class="sv" id="s-cf">—</div><div class="sl">Confirmées</div></div>
+        <div class="sc"><div class="sv" id="s-te">—</div><div class="sl">Terminées</div></div>
+        <div class="sc"><div class="sv" id="s-rv" style="font-size:18px;">—</div><div class="sl">Revenus FCFA</div></div>
+      </div>
+      <div style="margin-bottom:1rem;">
+        <div class="sc" style="display:flex;align-items:center;gap:12px;padding:.8rem 1rem;text-align:left;">
+          <span style="font-size:20px;">🟠</span>
+          <div>
+            <div style="font-size:11px;color:#FF8833;font-weight:500;letter-spacing:.08em;">PAIEMENTS ORANGE MONEY</div>
+            <div style="font-size:10px;color:var(--muted);">Paiements reçus sur +237 655 448 731 · Réf. OM enregistrées · <span id="s-ps" style="color:#FF8833;">—</span> paiement(s) enregistré(s)</div>
+          </div>
+        </div>
+      </div>
+      <div class="g2">
+        <div class="card">
+          <div class="card-title">Dernières réservations</div>
+          <div class="tw">
+            <table>
+              <thead><tr><th>Référence</th><th>Client</th><th>CNI</th><th>Type</th><th>Arrivée</th><th>Paiement OM</th><th>Statut</th></tr></thead>
+              <tbody id="tb-recent"><tr><td colspan="7" style="text-align:center;color:var(--muted);padding:1.5rem;">Chargement…</td></tr></tbody>
+            </table>
+          </div>
+          <div class="bg"><button class="btn btn-out sm" onclick="go('sejours')">Voir tous les séjours →</button></div>
+        </div>
+        <div>
+          <div class="card">
+            <div class="card-title">Accès rapides</div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <button class="btn btn-gold" style="width:100%;justify-content:center;" onclick="go('enregistrer')">✦ Enregistrer un client à l'accueil</button>
+              <button class="btn btn-out" style="width:100%;justify-content:center;" onclick="go('sejours')">Gérer les séjours</button>
+              <button class="btn btn-out" style="width:100%;justify-content:center;" onclick="go('clients')">Base de données clients</button>
+              <a href="/" target="_blank" style="text-decoration:none;"><button class="btn btn-out" style="width:100%;justify-content:center;">Voir la page client →</button></a>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Clients en séjour (HVAC actif)</div>
+            <div id="presents" style="font-size:12px;color:var(--muted);">Chargement…</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ ENREGISTREMENT MANUEL ══ -->
+    <div id="enregistrer" class="section">
+      <div class="page-title"><h2>Enregistrement à l'accueil</h2><p>Enregistrer un client sur place · Activation BACnet/YABE automatique</p></div>
+      <div class="ep">
+        <div class="ebloc">
+          <div class="etitle">① Identité du client</div>
+          <div class="fr">
+            <div class="fg"><label>Nom <span class="req">*</span></label><input type="text" id="e-nom" placeholder="NOM" oninput="this.value=this.value.toUpperCase()"></div>
+            <div class="fg"><label>Prénom <span class="req">*</span></label><input type="text" id="e-prenom" placeholder="Prénom"></div>
+          </div>
+          <div class="fr">
+            <div class="fg"><label>CNI / Passeport <span class="req">*</span></label><input type="text" id="e-cni" placeholder="CMR-1234567"></div>
+            <div class="fg"><label>Nationalité</label><input type="text" id="e-nat" placeholder="Camerounaise…"></div>
+          </div>
+          <div class="fr">
+            <div class="fg"><label>Téléphone <span class="req">*</span></label><input type="tel" id="e-tel" placeholder="+237 6XX XXX XXX"></div>
+            <div class="fg"><label>Email</label><input type="email" id="e-email" placeholder="email@exemple.com"></div>
+          </div>
+        </div>
+        <div class="ebloc">
+          <div class="etitle">② Détails du séjour</div>
+          <div class="fr3">
+            <div class="fg"><label>Type de chambre <span class="req">*</span></label>
+              <select id="e-type" onchange="calcTotal()">
+                <option value="">-- Choisir --</option>
+                <option value="Standard">Standard — 25 000 FCFA/nuit</option>
+                <option value="Supérieure">Supérieure — 45 000 FCFA/nuit</option>
+                <option value="Suite Prestige">Suite Prestige — 95 000 FCFA/nuit</option>
+              </select>
+            </div>
+            <div class="fg"><label>Date d'arrivée <span class="req">*</span></label><input type="date" id="e-arr" onchange="calcTotal()"></div>
+            <div class="fg"><label>Date de départ <span class="req">*</span></label><input type="date" id="e-dep" onchange="calcTotal()"></div>
+          </div>
+          <div class="fr">
+            <div class="fg"><label>Réf. chambre attribué</label><input type="text" id="e-num" placeholder="Ex : 205 (optionnel)"></div>
+            <div class="fg"><label>Statut initial</label>
+              <select id="e-stat">
+                <option value="Confirmée">Confirmée — arrivée prévue</option>
+                <option value="En cours">En cours — Check-In direct (→ YABE activé)</option>
+              </select>
+            </div>
+          </div>
+          <div class="fg"><label>Référence Orange Money (si paiement reçu)</label><input type="text" id="e-om" placeholder="Ex: OM241215ABCD1234" oninput="this.value=this.value.toUpperCase()"></div>
+          <div class="fg"><label>Observations</label><textarea id="e-obs" placeholder="Lit bébé, allergie, vue souhaitée…"></textarea></div>
+          <div id="calc-box">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div><div style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);">Total séjour</div>
+              <div class="big-money" id="c-total">0 FCFA</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:2px;" id="c-detail">—</div></div>
+              <div style="text-align:right;"><div style="font-size:10px;color:var(--muted);">Nuits</div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:36px;color:var(--cream);" id="c-nuits">0</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="bg">
+          <button class="btn btn-gold" onclick="enregistrer()">✦ Enregistrer le client</button>
+          <button class="btn btn-out" onclick="vider()">Vider le formulaire</button>
+        </div>
+        <div id="enreg-ok">
+          <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--green);margin-bottom:.5rem;">✓ Enregistrement effectué — BACnet/YABE notifié</div>
+          <div id="enreg-detail" style="font-size:13px;color:var(--cream);"></div>
+          <div class="bg" style="margin-top:.8rem;">
+            <button class="btn btn-out sm" onclick="go('sejours')">Voir dans les séjours →</button>
+            <button class="btn btn-gold sm" onclick="vider()">Nouvel enregistrement</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SÉJOURS ══ -->
+    <div id="sejours" class="section">
+      <div class="page-title"><h2>Gestion des séjours</h2><p>Réservations avec informations complètes clients + paiement Orange Money + statut YABE</p></div>
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;">
+          <input type="text" id="sr" placeholder="Réf., nom, CNI, chambre, email, réf OM…" style="max-width:280px;" oninput="filtRes()">
+          <select id="fst" style="max-width:155px;" onchange="filtRes()">
+            <option value="">Tous les statuts</option>
+            <option value="Confirmée">Confirmée</option>
+            <option value="En cours">En cours</option>
+            <option value="Terminée">Terminée</option>
+            <option value="Annulée">Annulée</option>
+          </select>
+          <select id="ftp" style="max-width:175px;" onchange="filtRes()">
+            <option value="">Tous types</option>
+            <option value="Standard">Standard</option>
+            <option value="Supérieure">Supérieure</option>
+            <option value="Suite Prestige">Suite Prestige</option>
+          </select>
+          <button class="btn btn-out sm" onclick="loadRes()">↻</button>
+          <span id="rc" style="font-size:11px;color:var(--muted);margin-left:auto;"></span>
+        </div>
+        <div class="tw">
+          <table>
+            <thead>
+              <tr>
+                <th>Référence</th><th>Nom complet</th><th>CNI</th><th>Téléphone</th>
+                <th>Email</th><th>Nationalité</th><th>Type chambre</th><th>Réf. Ch.</th><th>Réf. Clim.</th>
+                <th>Arrivée</th><th>Départ</th><th>Nuits</th><th>Total FCFA</th>
+                <th>Réf. Orange Money</th><th>Statut</th><th>Enregistré le</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="tb-res"><tr><td colspan="16" style="text-align:center;color:var(--muted);padding:2rem;">Chargement…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ CLIENTS ══ -->
+    <div id="clients" class="section">
+      <div class="page-title"><h2>Base de données clients</h2><p>Fichier complet — PostgreSQL</p></div>
+      <div class="g2" style="margin-bottom:1.2rem;">
+        <div class="card">
+          <div class="card-title">Ajouter un client (sans réservation)</div>
+          <div class="fr">
+            <div class="fg"><label>Nom <span class="req">*</span></label><input type="text" id="c-nom" placeholder="NOM" oninput="this.value=this.value.toUpperCase()"></div>
+            <div class="fg"><label>Prénom <span class="req">*</span></label><input type="text" id="c-pre" placeholder="Prénom"></div>
+          </div>
+          <div class="fr">
+            <div class="fg"><label>CNI / Passeport <span class="req">*</span></label><input type="text" id="c-cni" placeholder="Numéro unique"></div>
+            <div class="fg"><label>Nationalité</label><input type="text" id="c-nat" placeholder="Camerounaise…"></div>
+          </div>
+          <div class="fr">
+            <div class="fg"><label>Téléphone <span class="req">*</span></label><input type="tel" id="c-tel" placeholder="+237 6XX XXX XXX"></div>
+            <div class="fg"><label>Email</label><input type="email" id="c-email" placeholder="email@exemple.com"></div>
+          </div>
+          <div class="bg">
+            <button class="btn btn-gold" onclick="addClient()">✦ Ajouter</button>
+            <button class="btn btn-out" onclick="['c-nom','c-pre','c-cni','c-tel','c-email','c-nat'].forEach(i=>el(i).value='')">Vider</button>
+          </div>
+        </div>
+        <div class="card" style="display:flex;flex-direction:column;gap:.8rem;">
+          <div class="card-title">Statistiques</div>
+          <div class="g2">
+            <div class="sc"><div class="sv" id="sc2-cl">—</div><div class="sl">Clients</div></div>
+            <div class="sc"><div class="sv" id="sc2-res">—</div><div class="sl">Réservations</div></div>
+          </div>
+          <div style="margin-top:auto;padding-top:.8rem;border-top:1px solid rgba(0,71,255,.1);">
+            <button class="btn btn-gold" style="width:100%;justify-content:center;" onclick="go('enregistrer')">✦ Enregistrement complet à l'accueil</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;">
+          <input type="text" id="sc" placeholder="Nom, CNI, téléphone, email…" style="max-width:300px;" oninput="filtCl()">
+          <span id="cc" style="font-size:11px;color:var(--muted);"></span>
+          <button class="btn btn-out sm" style="margin-left:auto;" onclick="loadClients()">↻</button>
+        </div>
+        <div class="tw">
+          <table>
+            <thead><tr><th>#</th><th>Nom complet</th><th>CNI / Passeport</th><th>Téléphone</th><th>Email</th><th>Nationalité</th><th>Enregistré le</th><th>Séjours</th><th>Actions</th></tr></thead>
+            <tbody id="tb-cl"><tr><td colspan="9" style="text-align:center;color:var(--muted);padding:2rem;">Chargement…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="toast"></div>
+
+<!-- MODAL CONFIRM -->
+<div class="ov" id="ov-confirm">
+  <div class="mb sm">
+    <div class="mh"><h3 id="cv-title">Confirmation</h3><button class="mx" onclick="closeConfirm()">×</button></div>
+    <p id="cv-msg" style="font-size:13px;color:var(--muted);"></p>
+    <div class="mf"><button class="btn btn-out sm" onclick="closeConfirm()">Annuler</button><button class="btn btn-dng sm" id="cv-ok">Confirmer</button></div>
+  </div>
+</div>
+
+<!-- MODAL EDIT -->
+<div class="ov" id="ov-edit">
+  <div class="mb md">
+    <div class="mh"><h3>Modifier la réservation</h3><button class="mx" onclick="closeEdit()">×</button></div>
+    <input type="hidden" id="edit-id">
+    <div class="fr">
+      <div class="fg"><label>Réf. chambre</label><input type="text" id="edit-rc" placeholder="Ex : 205"></div>
+      <div class="fg"><label>Statut</label>
+        <select id="edit-stat">
+          <option value="Confirmée">Confirmée</option>
+          <option value="En cours">En cours — Check-In (→ YABE activé)</option>
+          <option value="Terminée">Terminée — Check-Out (→ YABE arrêté)</option>
+          <option value="Annulée">Annulée</option>
+        </select>
+      </div>
+    </div>
+    <div class="fg"><label>Référence Orange Money (mise à jour)</label><input type="text" id="edit-om" placeholder="OM241215ABCD1234" oninput="this.value=this.value.toUpperCase()"></div>
+    <div style="margin-top:.5rem;padding:.7rem;background:rgba(0,71,255,.07);border:1px solid rgba(0,71,255,.2);border-radius:6px;font-size:11px;color:var(--muted);">
+      ❄️ Changer le statut vers <b style="color:var(--blue-l);">En cours</b> envoie un webhook CHECK_IN → passerelle BACnet → <b style="color:var(--gold-l);">YABE</b> (AO=23°C · BO=ON · MV=Froid)
+    </div>
+    <div class="mf"><button class="btn btn-out sm" onclick="closeEdit()">Annuler</button><button class="btn btn-gold sm" onclick="saveEdit()">Enregistrer</button></div>
+  </div>
+</div>
+
+<!-- MODAL FICHE -->
+<div class="ov" id="ov-fiche">
+  <div class="mb lg">
+    <div class="mh">
+      <div><h3 id="fh-nom">Fiche client</h3><div id="fh-ref" style="font-size:11px;color:var(--muted);margin-top:3px;"></div></div>
+      <button class="mx" onclick="closeFiche()">×</button>
+    </div>
+    <div id="fh-body"></div>
+    <div class="mf"><button class="btn btn-out sm" onclick="closeFiche()">Fermer</button><button class="btn btn-gold sm" id="fh-edit">Modifier statut</button></div>
+  </div>
+</div>
+
+<script>
+let auth=null, allRes=[], allCl=[], confirmCb=null;
+const TR={'Standard':25000,'Supérieure':45000,'Suite Prestige':95000};
+
+// ── Auth ──────────────────────────────────────────────────────────────────────
+async function login(){
+  const u=v('lu'),p=v('lp');
+  if(!u||!p){el('lerr').style.display='block';return;}
+  auth='Basic '+btoa(u+':'+p);
+  try{
+    await api('GET','/api/admin/stats');
+    el('login-screen').style.display='none';
+    el('app').style.display='block';
+    el('lerr').style.display='none';
+    loadAll();
+  }catch{auth=null;el('lerr').style.display='block';el('lp').value='';}
+}
+function logout(){auth=null;el('login-screen').style.display='flex';el('app').style.display='none';el('lu').value='';el('lp').value='';}
+
+// ── Navigation ────────────────────────────────────────────────────────────────
+function go(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  el(id).classList.add('active');
+  const tabs=['accueil','enregistrer','sejours','clients'];
+  document.querySelectorAll('nav button').forEach((b,i)=>b.classList.toggle('active',tabs[i]===id));
+  if(id==='sejours') loadRes();
+  if(id==='clients') loadClients();
+  if(id==='accueil') loadAll();
+}
+
+// ── API ───────────────────────────────────────────────────────────────────────
+async function api(m,url,body){
+  const o={method:m,headers:{Authorization:auth,'Content-Type':'application/json'}};
+  if(body) o.body=JSON.stringify(body);
+  const r=await fetch(url,o);
+  if(!r.ok){const d=await r.json();throw new Error(d.detail||'Erreur serveur');}
+  return r.json();
+}
+function v(id){return el(id).value.trim();}
+function el(id){return document.getElementById(id);}
+
+// ── Stats / Dashboard ─────────────────────────────────────────────────────────
+async function loadAll(){await Promise.all([loadStats(),loadRecent()]);}
+
+async function loadStats(){
+  const d=await api('GET','/api/admin/stats');
+  el('s-cl').textContent=d.clients; el('s-res').textContent=d.reservations;
+  el('s-ec').textContent=d.en_cours; el('s-cf').textContent=d.confirmees;
+  el('s-te').textContent=d.terminees;
+  el('s-rv').textContent=fcfa(d.revenus,true);
+  el('sc2-cl').textContent=d.clients; el('sc2-res').textContent=d.reservations;
+  if(el('s-ps')) el('s-ps').textContent=d.paiements_sim||0;
+}
+
+async function loadRecent(){
+  allRes=await api('GET','/api/admin/reservations');
+  const rec=allRes.slice(0,6),tb=el('tb-recent');
+  tb.innerHTML=!rec.length
+    ?'<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:1.5rem;">Aucune réservation</td></tr>'
+    :rec.map(r=>`<tr style="cursor:pointer;" onclick='fiche(${J(r)})' title="Voir la fiche">
+      <td class="tg">${r.ref}</td>
+      <td><strong>${r.client_nom}</strong></td>
+      <td class="tm">${r.cni||'—'}</td>
+      <td>${r.type_chambre}</td>
+      <td>${fd(r.arrivee)}</td>
+      <td>${r.paiement_sim
+        ?`<span class="om-ref-badge">🟠 ${(r.reference_om||'OM confirmé').substring(0,12)}</span>`
+        :'<span class="badge b-mut">En attente</span>'}</td>
+      <td><span class="badge ${bc(r.statut)}">${r.statut}</span></td>
+    </tr>`).join('');
+
+  const pres=allRes.filter(r=>r.statut==='En cours'),cp=el('presents');
+  cp.innerHTML=!pres.length
+    ?'<span style="color:var(--muted);">Aucun client en séjour · HVAC YABE en veille.</span>'
+    :pres.map(r=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(0,71,255,.08);">
+        <div>
+          <div style="font-size:13px;font-weight:500;">${r.client_nom}</div>
+          <div style="font-size:10px;color:var(--muted);">Ch.${r.ref_chambre} · ${r.type_chambre} · départ ${fd(r.depart)}</div>
+          <div style="font-size:10px;color:var(--blue-l);">❄️ YABE : AO=23°C · BO=ON · MV=Froid</div>
+        </div>
+        <span class="badge b-ok">En cours</span>
+      </div>`).join('');
+}
+
+// ── Enregistrement manuel ─────────────────────────────────────────────────────
+function calcTotal(){
+  const type=v('e-type'),arr=v('e-arr'),dep=v('e-dep'),box=el('calc-box');
+  if(!type||!arr||!dep){box.style.display='none';return;}
+  const nuits=Math.round((new Date(dep)-new Date(arr))/86400000);
+  if(nuits<=0){box.style.display='none';return;}
+  const tarif=TR[type]||0,total=nuits*tarif;
+  el('c-total').textContent=fcfa(total);
+  el('c-detail').textContent=`${nuits} nuit${nuits>1?'s':''} × ${fcfa(tarif)}/nuit`;
+  el('c-nuits').textContent=nuits;
+  box.style.display='block';
+}
+async function enregistrer(){
+  const nom=v('e-nom'),pre=v('e-prenom'),cni=v('e-cni'),tel=v('e-tel'),
+        type=v('e-type'),arr=v('e-arr'),dep=v('e-dep');
+  if(!nom||!pre||!cni||!tel||!type||!arr||!dep){toast('Champs obligatoires manquants.','error');return;}
+  try{
+    const res=await api('POST','/api/admin/enregistrer',{
+      nom,prenom:pre,cni,telephone:tel,
+      email:v('e-email')||null,nationalite:v('e-nat')||null,
+      type_chambre:type,arrivee:arr,depart:dep,
+      numero:v('e-num')||null,observations:v('e-obs')||null,
+      statut:v('e-stat'),reference_om:v('e-om')||null
+    });
+    el('enreg-detail').innerHTML=`
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;">
+        <div><span style="color:var(--muted);">Référence :</span> <strong style="color:var(--gold-l);">${res.ref}</strong></div>
+        <div><span style="color:var(--muted);">Client :</span> ${nom} ${pre}</div>
+        <div><span style="color:var(--muted);">Durée :</span> ${res.nuits} nuit${res.nuits>1?'s':''}</div>
+        <div><span style="color:var(--muted);">Total :</span> <strong>${fcfa(res.total)}</strong></div>
+      </div>`;
+    el('enreg-ok').style.display='block';
+    toast(`✓ ${pre} ${nom} — ${res.ref} · YABE notifié`);
+    loadStats();
+  }catch(e){toast(e.message,'error');}
+}
+function vider(){
+  ['e-nom','e-prenom','e-cni','e-nat','e-tel','e-email','e-num','e-obs','e-om'].forEach(i=>el(i).value='');
+  el('e-type').value='';el('e-arr').value='';el('e-dep').value='';
+  el('e-stat').value='Confirmée';
+  el('calc-box').style.display='none';el('enreg-ok').style.display='none';
+}
+
+// ── Séjours ───────────────────────────────────────────────────────────────────
+async function loadRes(){allRes=await api('GET','/api/admin/reservations');showRes(allRes);}
+
+function showRes(data){
+  el('rc').textContent=`${data.length} séjour(s)`;
+  const tb=el('tb-res');
+  if(!data.length){tb.innerHTML='<tr><td colspan="16" style="text-align:center;color:var(--muted);padding:2rem;">Aucune réservation</td></tr>';return;}
+  tb.innerHTML=data.map(r=>`<tr>
+    <td class="tg" style="cursor:pointer;" onclick='fiche(${J(r)})' title="Voir la fiche">${r.ref}</td>
+    <td><strong>${r.client_nom}</strong></td>
+    <td class="tm">${r.cni||'—'}</td>
+    <td class="tm">${r.telephone||'—'}</td>
+    <td class="tm" style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${r.email||''}">${r.email||'—'}</td>
+    <td class="tm">${r.nationalite||'—'}</td>
+    <td>${r.type_chambre}</td>
+    <td style="font-weight:500;">${r.ref_chambre}</td>
+    <td class="tm">${r.ref_climatisation||'—'}</td>
+    <td>${fd(r.arrivee)}</td>
+    <td>${fd(r.depart)}</td>
+    <td style="text-align:center;">${r.nuits}</td>
+    <td style="color:var(--gold-l);font-weight:500;">${fcfa(r.total)}</td>
+    <td>${r.paiement_sim
+      ?`<span class="om-ref-badge" title="Orange Money">🟠 ${(r.reference_om||'Confirmé').substring(0,14)}</span>`
+      :'<span class="badge b-mut">En attente</span>'}</td>
+    <td><span class="badge ${bc(r.statut)}">${r.statut}</span></td>
+    <td class="tm">${fdt(r.cree_le)}</td>
+    <td class="ta">
+      <button class="btn btn-out xs" onclick='fiche(${J(r)})' title="Voir fiche">👁</button>
+      <button class="btn btn-out xs" onclick='openEdit(${J(r)})' title="Modifier">✎</button>
+      ${r.statut!=='En cours'?`<button class="btn-checkin" onclick="checkIn(${r.id})" title="Check-In">✔ Check-In</button>`:''}
+      ${r.statut==='En cours'?`<button class="btn-checkout" onclick="checkOut(${r.id})" title="Check-Out">✖ Check-Out</button>`:''}
+      <button class="btn btn-dng xs" onclick="delRes(${r.id})" title="Supprimer">×</button>
+    </td>
+  </tr>`).join('');
+}
+
+function filtRes(){
+  const q=el('sr').value.toLowerCase(),st=el('fst').value,tp=el('ftp').value;
+  showRes(allRes.filter(r=>
+    (!q||(r.client_nom||'').toLowerCase().includes(q)||(r.ref||'').toLowerCase().includes(q)||
+         (r.cni||'').toLowerCase().includes(q)||(r.telephone||'').includes(q)||
+         (r.email||'').toLowerCase().includes(q)||(r.ref_chambre||'').includes(q)||
+         (r.reference_om||'').toLowerCase().includes(q))&&
+    (!st||r.statut===st)&&(!tp||r.type_chambre===tp)));
+}
+
+async function delRes(id){
+  confirm2('Supprimer la réservation','Action irréversible.',async()=>{
+    await api('DELETE',`/api/admin/reservations/${id}`);
+    loadRes();loadStats();toast('Réservation supprimée.');
+  });
+}
+
+// ── Fiche détaillée ───────────────────────────────────────────────────────────
+function fiche(r){
+  el('fh-nom').textContent=r.client_nom;
+  el('fh-ref').textContent=`Réf. ${r.ref} · Enregistré le ${fdt(r.cree_le)}`;
+  el('fh-body').innerHTML=`
+    <div class="fg2">
+      <div class="fs"><h4>Identité du client</h4>
+        <div class="frow"><span class="fk">Nom complet</span><span class="fv">${r.client_nom}</span></div>
+        <div class="frow"><span class="fk">CNI / Passeport</span><span class="fv">${r.cni||'—'}</span></div>
+        <div class="frow"><span class="fk">Nationalité</span><span class="fv">${r.nationalite||'—'}</span></div>
+        <div class="frow"><span class="fk">Téléphone</span><span class="fv">${r.telephone||'—'}</span></div>
+        <div class="frow"><span class="fk">Email</span><span class="fv">${r.email||'—'}</span></div>
+        <div class="frow"><span class="fk">Client depuis</span><span class="fv tm">${fdt(r.client_depuis)||'—'}</span></div>
+      </div>
+      <div class="fs"><h4>Détails du séjour</h4>
+        <div class="frow"><span class="fk">Référence</span><span class="fv gold">${r.ref}</span></div>
+        <div class="frow"><span class="fk">Type de chambre</span><span class="fv">${r.type_chambre}</span></div>
+        <div class="frow"><span class="fk">N° de chambre</span><span class="fv"><strong>${r.ref_chambre}</strong></span></div>
+        <div class="frow"><span class="fk">Date d'arrivée</span><span class="fv">${fd(r.arrivee)}</span></div>
+        <div class="frow"><span class="fk">Date de départ</span><span class="fv">${fd(r.depart)}</span></div>
+        <div class="frow"><span class="fk">Durée</span><span class="fv"><strong>${r.nuits} nuit${r.nuits>1?'s':''}</strong></span></div>
+      </div>
+      <div class="fs"><h4>Paiement Orange Money</h4>
+        <div class="frow"><span class="fk">Tarif / nuit</span><span class="fv">${fcfa(Math.round(r.total/r.nuits))}</span></div>
+        <div class="frow"><span class="fk">Total séjour</span><span class="fv big">${fcfa(r.total)}</span></div>
+        <div class="frow"><span class="fk">Statut paiement</span><span class="fv">${r.paiement_sim
+          ?'<span class="om-ref-badge">🟠 Orange Money confirmé</span>'
+          :'<span class="badge b-mut">En attente</span>'}</span></div>
+        ${r.reference_om?`<div class="frow"><span class="fk">Référence OM</span><span class="fv" style="color:#FF8833;font-family:'Cormorant Garamond',serif;font-size:15px;">${r.reference_om}</span></div>`:''}
+        <div class="frow"><span class="fk">Destinataire</span><span class="fv tm">+237 655 448 731</span></div>
+      </div>
+      <div class="fs"><h4>BACnet / YABE</h4>
+        <div class="frow"><span class="fk">Statut</span><span class="fv"><span class="badge ${bc(r.statut)}">${r.statut}</span></span></div>
+        <div class="frow"><span class="fk">YABE AO</span><span class="fv" style="color:var(--blue-l);">${r.statut==='En cours'?'23.0°C':'0.0 (veille)'}</span></div>
+        <div class="frow"><span class="fk">YABE BO</span><span class="fv" style="color:${r.statut==='En cours'?'#2ECC71':'var(--muted)'}">${r.statut==='En cours'?'ON (Active)':'OFF (Inactive)'}</span></div>
+        <div class="frow"><span class="fk">YABE MV</span><span class="fv">${r.statut==='En cours'?'2 (Froid)':'1 (Auto)'}</span></div>
+        ${r.observations?`<div style="margin-top:.6rem;padding:.5rem;background:rgba(0,71,255,.05);border-radius:4px;font-size:11px;color:var(--cream-2);">${r.observations}</div>`:''}
+      </div>
+    </div>`;
+  el('fh-edit').onclick=()=>{closeFiche();openEdit(r);};
+  el('ov-fiche').classList.add('show');
+}
+function closeFiche(){el('ov-fiche').classList.remove('show');}
+
+// ── Edit ──────────────────────────────────────────────────────────────────────
+function openEdit(r){
+  el('edit-id').value=r.id;
+  el('edit-rc').value=r.ref_chambre!=='À attribuer'?r.ref_chambre:'';
+  el('edit-clim').value=r.ref_climatisation||'';
+  el('edit-stat').value=r.statut;
+  el('edit-om').value=r.reference_om||'';
+  el('ov-edit').classList.add('show');
+}
+function closeEdit(){el('ov-edit').classList.remove('show');}
+async function saveEdit(){
+  const id=el('edit-id').value,num=v('edit-rc'),stat=v('edit-stat'),om=v('edit-om');
+  try{
+    const clim=v('edit-clim');await api('PATCH',`/api/admin/reservations/${id}`,{statut:stat,ref_chambre:num||null,ref_climatisation:clim||null,reference_om:om||null});
+    closeEdit();loadRes();loadAll();
+    toast('Réservation mise à jour · YABE notifié.');
+  }catch(e){toast(e.message,'error');}
+}
+
+// ── Clients ───────────────────────────────────────────────────────────────────
+async function loadClients(){
+  allCl=await api('GET','/api/admin/clients');
+  el('cc').textContent=allCl.length+' client(s)';
+  showCl(allCl);
+}
+function showCl(data){
+  const tb=el('tb-cl');
+  if(!data.length){tb.innerHTML='<tr><td colspan="9" style="text-align:center;color:var(--muted);padding:2rem;">Aucun client</td></tr>';return;}
+  tb.innerHTML=data.map(c=>{
+    const nb=allRes.filter(r=>r.client_id===c.id).length;
+    return `<tr>
+      <td class="tm">${c.id}</td>
+      <td><strong>${c.nom}</strong> ${c.prenom}</td>
+      <td class="tm">${c.cni}</td>
+      <td>${c.telephone}</td>
+      <td class="tm">${c.email||'—'}</td>
+      <td class="tm">${c.nationalite||'—'}</td>
+      <td class="tm">${fdt(c.cree_le)}</td>
+      <td style="text-align:center;">${nb>0?`<span class="badge b-gold">${nb} rés.</span>`:'<span class="tm">—</span>'}</td>
+      <td><button class="btn btn-dng xs" onclick="delClient(${c.id})">Suppr.</button></td>
+    </tr>`;
+  }).join('');
+}
+function filtCl(){
+  const q=el('sc').value.toLowerCase();
+  showCl(allCl.filter(c=>
+    c.nom.toLowerCase().includes(q)||c.prenom.toLowerCase().includes(q)||
+    c.cni.toLowerCase().includes(q)||(c.telephone||'').includes(q)||
+    (c.email||'').toLowerCase().includes(q)||(c.nationalite||'').toLowerCase().includes(q)));
+}
+async function addClient(){
+  const nom=v('c-nom'),pre=v('c-pre'),cni=v('c-cni'),tel=v('c-tel');
+  if(!nom||!pre||!cni||!tel){toast('Champs obligatoires manquants.','error');return;}
+  try{
+    await api('POST','/api/admin/clients',{nom,prenom:pre,cni,telephone:tel,email:v('c-email')||null,nationalite:v('c-nat')||null});
+    ['c-nom','c-pre','c-cni','c-tel','c-email','c-nat'].forEach(i=>el(i).value='');
+    loadClients();loadStats();toast(`${pre} ${nom} ajouté.`);
+  }catch(e){toast(e.message,'error');}
+}
+async function delClient(id){
+  confirm2('Supprimer le client','Les réservations seront conservées.',async()=>{
+    try{await api('DELETE',`/api/admin/clients/${id}`);loadClients();loadStats();toast('Client supprimé.');}
+    catch(e){toast(e.message,'error');}
+  });
+}
+
+// ── Confirm modal ─────────────────────────────────────────────────────────────
+function confirm2(t,m,cb){el('cv-title').textContent=t;el('cv-msg').textContent=m;el('ov-confirm').classList.add('show');confirmCb=cb;}
+function closeConfirm(){el('ov-confirm').classList.remove('show');confirmCb=null;}
+el('cv-ok').onclick=()=>{if(confirmCb)confirmCb();closeConfirm();};
+
+// ── Utilitaires ───────────────────────────────────────────────────────────────
+const bc=s=>({'Confirmée':'b-gold','En cours':'b-ok','Terminée':'b-mut','Annulée':'b-dng'}[s]||'b-mut');
+const fd=d=>d?new Date(d+'T00:00:00').toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'}):'—';
+const fdt=d=>d?new Date(d).toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'2-digit',hour:'2-digit',minute:'2-digit'}):'—';
+const fcfa=(v,c=false)=>(v===undefined||v===null)?'—':Number(v).toLocaleString('fr-FR')+(c?'':' FCFA');
+const J=o=>JSON.stringify(o).replace(/'/g,"&#39;");
+function toast(msg,type='success'){const t=el('toast');t.textContent=msg;t.className='show '+type;setTimeout(()=>t.className='',3500);}
+['ov-confirm','ov-edit','ov-fiche'].forEach(id=>el(id).addEventListener('click',function(e){if(e.target===this)this.classList.remove('show');}));
+
+// ── Check-In (vert) et Check-Out (rouge) rapides ─────────────────────────
+async function checkIn(id){
+  try{
+    await api('PATCH',`/api/admin/reservations/${id}`,{statut:'En cours'});
+    loadRes();loadAll();toast('✔ Check-In effectué — HVAC activé via BACnet.');
+  }catch(e){toast(e.message,'error');}
+}
+async function checkOut(id){
+  try{
+    await api('PATCH',`/api/admin/reservations/${id}`,{statut:'Terminee'});
+    loadRes();loadAll();toast('✖ Check-Out effectué — HVAC arrêté.');
+  }catch(e){toast(e.message,'error');}
+}
+
+</script>
+</body>
+</html>

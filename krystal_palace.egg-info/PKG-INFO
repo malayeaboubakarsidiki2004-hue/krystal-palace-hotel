@@ -1,0 +1,5 @@
+Metadata-Version: 2.4
+Name: krystal-palace
+Version: 7.1.0
+Summary: Krystal Palace Hôtel Yaoundé — PMS-GTC v7 (FastAPI + PostgreSQL + BACnet/IP + Orange Money)
+Requires-Python: >=3.11

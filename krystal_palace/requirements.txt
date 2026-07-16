@@ -1,0 +1,26 @@
+# ══════════════════════════════════════════════════════════════════════════════
+# requirements.txt — Krystal Palace Hôtel Yaoundé v7.0
+# PyCharm Community 2024 · Python 3.11
+#
+# Installer : pip install -r requirements.txt
+# Ou via PyCharm : Settings → Python Interpreter → + → rechercher chaque lib
+# ══════════════════════════════════════════════════════════════════════════════
+
+# ── Serveur web FastAPI ───────────────────────────────────────────────────────
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+
+# ── Base de données PostgreSQL ────────────────────────────────────────────────
+psycopg2-binary==2.9.9
+
+# ── Validation des données (Pydantic v2) ─────────────────────────────────────
+pydantic==2.7.1
+
+# ── Requêtes HTTP async (webhooks vers la gateway BACnet) ─────────────────────
+httpx==0.27.0
+
+# ── Formulaires HTML multipart ────────────────────────────────────────────────
+python-multipart==0.0.9
+
+# ── Variables d'environnement (.env) ─────────────────────────────────────────
+python-dotenv==1.0.1

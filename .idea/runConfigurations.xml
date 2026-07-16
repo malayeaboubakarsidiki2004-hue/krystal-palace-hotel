@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RunManager" selected="Python.PMS Krystal Palace :8000">
+
+    <!-- ── Configuration 1 : Serveur PMS (port 8000) ── -->
+    <configuration name="PMS Krystal Palace :8000"
+                   type="PythonConfigurationType"
+                   factoryName="Python"
+                   nameIsGenerated="false">
+      <module name="krystal_palace_pycharm" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="ADMIN_USER"    value="admin" />
+        <env name="ADMIN_PASS"    value="krystal2024" />
+        <env name="DATABASE_URL"  value="postgresql://krystal_user:krystal2024@localhost:5432/krystal_palace" />
+        <env name="GATEWAY_URL"   value="http://127.0.0.1:8001" />
+        <env name="GATEWAY_TOKEN" value="secret-gateway-token" />
+      </envs>
+      <option name="SCRIPT_NAME" value="uvicorn" />
+      <option name="PARAMETERS"  value="krystal_palace.main:app --host 127.0.0.1 --port 8000 --reload --log-level info" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="true" />
+      <option name="MODULE_MODE" value="true" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+
+    <!-- ── Configuration 2 : Passerelle BACnet (port 8001) ── -->
+    <configuration name="Gateway BACnet :8001"
+                   type="PythonConfigurationType"
+                   factoryName="Python"
+                   nameIsGenerated="false">
+      <module name="krystal_palace_pycharm" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="GATEWAY_TOKEN"    value="secret-gateway-token" />
+        <env name="DATABASE_URL"     value="postgresql://krystal_user:krystal2024@localhost:5432/krystal_palace" />
+      </envs>
+      <option name="SCRIPT_NAME" value="uvicorn" />
+      <option name="PARAMETERS"  value="krystal_palace.gateway.main:app --host 127.0.0.1 --port 8001 --reload --log-level info" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="true" />
+      <option name="MODULE_MODE" value="true" />
+      <method v="2" />
+    </configuration>
+
+  </component>
+</project>

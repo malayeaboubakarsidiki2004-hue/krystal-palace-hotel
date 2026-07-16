@@ -1,0 +1,501 @@
+@startuml Diagramme_de_Classes_Krystal_Palace
+title Diagramme de Classes\nKrystal Palace Hôtel Yaoundé — SQLite · YABE · PyCharm
+
+skinparam backgroundColor #0D0D0D
+skinparam classBackgroundColor #1E1E16
+skinparam classBorderColor #C9A84C
+skinparam classArrowColor #C9A84C
+skinparam classFontColor #F7F3EA
+skinparam classHeaderBackgroundColor #2A2A1E
+skinparam titleFontColor #C9A84C
+skinparam titleFontSize 16
+skinparam packageBackgroundColor #161610
+skinparam packageBorderColor #C9A84C
+skinparam packageFontColor #C9A84C
+
+package "Couche Données — SQLite" {
+
+    class Client {
+        - id : Integer <<PK, AUTOINCREMENT>>
+        - nom : String
+        - prenom : String
+        - cni : String <<UNIQUE>>
+        - telephone : String
+        - email : String
+        - nationalite : String
+        - cree_le : String
+        ..
+        + inserer() : void
+        + mettreAJour() : void
+        + supprimer() : void
+        + getReservations() : List<Reservation>
+    }
+
+    class Reservation {
+        - id : Integer <<PK, AUTOINCREMENT>>
+        - ref : String <<UNIQUE>>
+        - client_id : Integer <<FK>>
+        - client_nom : String
+        - type_chambre : String
+        - numero : String
+        - arrivee : String
+        - depart : String
+        - nuits : Integer
+        - total : Integer <<FCFA>>
+        - observations : String
+        - statut : String
+        - cree_le : String
+        ..
+        + calculerNuits() : Integer
+        + calculerTotal() : Integer
+        + checkIn() : void
+        + checkOut() : void
+        + annuler() : void
+    }
+
+    class BaseSQLite {
+        - chemin : Path = "database/krystal_palace.db"
+        - journal_mode : String = "WAL"
+        - foreign_keys : Boolean = True
+        ..
+        + get_db() : Connection
+        + fetchall_dict() : List<dict>
+        + fetchone_dict() : dict
+        + init_db() : void
+    }
+
+    class VueReservationsDetail {
+        <<VIEW>>
+        + ref : String
+        + client_nom : String
+        + telephone : String
+        + email : String
+        + type_chambre : String
+        + numero : String
+        + arrivee : String
+        + depart : String
+        + montant : String
+        + statut : String
+    }
+}
+
+package "Couche Web — FastAPI port 8000" {
+
+    class ApplicationWeb {
+        - host : String = "127.0.0.1"
+        - port : Integer = 8000
+        - ADMIN_USER : String
+        - ADMIN_PASS : String
+        - GATEWAY_URL : String = "http://127.0.0.1:8001"
+        - GATEWAY_TOKEN : String
+        ..
+        + page_client() : HTMLResponse
+        + page_admin() : HTMLResponse
+        + reserver(data) : dict
+        + stats() : dict
+        + liste_clients() : List
+        + creer_client(data) : dict
+        + supprimer_client(id) : dict
+        + liste_reservations() : List
+        + modifier_reservation(id, data) : dict
+        + supprimer_reservation(id) : dict
+        + envoyer_webhook(payload) : void
+        + health() : dict
+    }
+
+    class InterfaceClient {
+        <<HTML>>
+        - url : String = "/"
+        - titre : String = "Réserver — Krystal Palace Yaoundé"
+        ..
+        + choisirChambre() : void
+        + saisirDates() : void
+        + saisirIdentite() : void
+        + confirmerReservation() : void
+        + afficherConfirmation() : void
+    }
+
+    class InterfaceAdmin {
+        <<HTML>>
+        - url : String = "/admin"
+        - titre : String = "Administration"
+        ..
+        + seConnecter() : void
+        + voirTableauBord() : void
+        + gererClients() : void
+        + gererReservations() : void
+        + validerCheckIn() : void
+        + validerCheckOut() : void
+        + attribuerChambre() : void
+    }
+
+    enum TypeChambre {
+        STANDARD = 25 000 FCFA/nuit
+        SUPERIEURE = 45 000 FCFA/nuit
+        SUITE_PRESTIGE = 95 000 FCFA/nuit
+    }
+
+    enum StatutReservation {
+        CONFIRMEE
+        EN_COURS
+        TERMINEE
+        ANNULEE
+    }
+}
+
+package "Couche BACnet — FastAPI port 8001" {
+
+    class PaserelleBACnet {
+        - host : String = "127.0.0.1"
+        - port : Integer = 8001
+        ..
+        + webhook_reservation(payload) : dict
+        + attribuer_chambre(payload) : dict
+        + health() : dict
+        + test_demarrer(numero) : dict
+        + test_arreter(numero) : dict
+        + verifier_token(header) : void
+    }
+
+    class Scheduler {
+        <<APScheduler>>
+        - jobs : Dict<String, Job>
+        ..
+        + planifier_reservation(ref, numero, arrivee, depart) : void
+        + annuler_jobs(ref) : void
+        + demarrage_immediat(ref, numero) : void
+        + arret_immediat(ref, numero) : void
+    }
+
+    class BACnetClient {
+        <<bacpypes3>>
+        - app : Application
+        - device_ip : String = "127.0.0.1"
+        - device_port : Integer = 47808
+        ..
+        + get_app() : Application
+        + write_analog_output(instance, value) : bool
+        + write_binary_output(instance, on) : bool
+        + write_multistate_value(instance, mode) : bool
+        + demarrer_chambre(numero, temp, mode) : bool
+        + arreter_chambre(numero) : bool
+        + read_temperature(numero) : float
+    }
+
+    class Config {
+        <<config.py>>
+        + BACNET_DEVICE_IP : String = "127.0.0.1"
+        + BACNET_DEVICE_PORT : Integer = 47808
+        + YABE_DEVICE_INSTANCE : Integer = 1001
+        + CHAMBRES_BACNET : Dict
+        + TEMP_PRECOOLING : Float = 22.0
+        + TEMP_OCCUPIED : Float = 23.0
+        + MODE_COOLING : Integer = 2
+        + MINUTES_AVANT_ARRIVEE : Integer = 30
+        + MINUTES_APRES_DEPART : Integer = 10
+    }
+}
+
+package "Simulateur YABE — BACnet/IP" {
+
+    class SimulateurYABE {
+        <<Externe Windows>>
+        - device_instance : Integer = 1001
+        - ip : String = "127.0.0.1"
+        - port : Integer = 47808
+        ..
+        + addDevice(instance) : void
+        + addAnalogOutput(instance, name) : void
+        + addBinaryOutput(instance, name) : void
+        + addMultiStateValue(instance, name) : void
+        + setPresentValue(value) : void
+        + readPresentValue() : float
+    }
+
+    class ChambreVirtuelle {
+        - numero : String
+        - ao_setpoint : AnalogOutput
+        - bo_power : BinaryOutput
+        - mv_mode : MultiStateValue
+        - etat_clim : Boolean
+        - consigne_temp : Float
+        ..
+        + demarrer(temp, mode) : void
+        + arreter() : void
+        + lireEtat() : dict
+    }
+}
+
+' ── Relations ────────────────────────────────────────────────────────────────
+Client "1" -- "0..*" Reservation : possède >
+Reservation --> TypeChambre : est de type >
+Reservation --> StatutReservation : a pour statut >
+BaseSQLite ..> Client : gère >
+BaseSQLite ..> Reservation : gère >
+VueReservationsDetail ..> Client : join >
+VueReservationsDetail ..> Reservation : join >
+
+ApplicationWeb --> BaseSQLite : utilise >
+ApplicationWeb --> InterfaceClient : sert >
+ApplicationWeb --> InterfaceAdmin : sert >
+ApplicationWeb --> PaserelleBACnet : webhook HTTP >
+
+PaserelleBACnet --> Scheduler : planifie >
+PaserelleBACnet --> BACnetClient : commande >
+PaserelleBACnet --> Config : lit >
+Scheduler --> BACnetClient : déclenche >
+BACnetClient --> Config : lit mapping >
+
+BACnetClient --> SimulateurYABE : BACnet/IP UDP 47808 >
+SimulateurYABE "1" *-- "11" ChambreVirtuelle : contient >
+
+@enduml
+
+'===================================================================
+
+@startuml Diagramme_Activite_Krystal_Palace
+title Diagramme d'Activité — Cycle de vie d'une réservation\nKrystal Palace Hôtel Yaoundé
+
+skinparam backgroundColor #0D0D0D
+skinparam activityBackgroundColor #1E1E16
+skinparam activityBorderColor #C9A84C
+skinparam activityArrowColor #C9A84C
+skinparam activityFontColor #F7F3EA
+skinparam titleFontColor #C9A84C
+skinparam titleFontSize 15
+skinparam activityDiamondBackgroundColor #2A2A1E
+skinparam activityDiamondBorderColor #C9A84C
+skinparam activityStartColor #C9A84C
+skinparam activityEndColor #C9A84C
+skinparam swimlaneBackgroundColor #161610
+skinparam swimlaneBorderColor #C9A84C
+skinparam swimlaneTitleFontColor #C9A84C
+
+|#1E1E16|🧳 CLIENT|
+|#161610|🌐 SITE WEB FastAPI :8000|
+|#1A1A08|🗄️ SQLite DB|
+|#1E1610|⚙️ PASSERELLE :8001|
+|#1A0A0A|🎮 SIMULATEUR YABE|
+
+|🧳 CLIENT|
+start
+:Ouvrir navigateur\nhttp://127.0.0.1:8000;
+:Choisir type de chambre\n(Standard · Supérieure · Suite Prestige);
+:Saisir dates arrivée / départ;
+
+|🌐 SITE WEB FastAPI :8000|
+:Calculer nuits et total FCFA;
+
+|🧳 CLIENT|
+:Remplir fiche identité\n(Nom, Prénom, CNI, Tél, Email, Nationalité);
+:Cliquer « Confirmer la réservation »;
+
+|🌐 SITE WEB FastAPI :8000|
+:Validation Pydantic des données;
+
+if (Données valides ?) then (non)
+  :Retourner erreur HTTP 400;
+  |🧳 CLIENT|
+  :Corriger les données;
+  stop
+else (oui)
+endif
+
+|🗄️ SQLite DB|
+:INSERT clients (ON CONFLICT → UPDATE téléphone);
+:SELECT id FROM clients WHERE cni=?;
+:INSERT reservations (ref unique, statut=Confirmée);
+
+|🌐 SITE WEB FastAPI :8000|
+:Retourner {ref, total, nuits, message};
+
+|🧳 CLIENT|
+:Voir confirmation\n✅ Référence RES-XXXXXXXXXXXXXX\nTotal: XX XXX FCFA;
+
+|🌐 SITE WEB FastAPI :8000|
+:Lancer webhook asynchrone\nPOST 127.0.0.1:8001/webhook/reservation\n{RESERVATION_CONFIRMEE};
+
+|⚙️ PASSERELLE :8001|
+:Réception webhook;
+
+if (Numéro chambre attribué ?) then (oui)
+  :Planifier job APScheduler\nDémarrage = arrivée - 30 min;
+  :Planifier job APScheduler\nArrêt = départ + 10 min;
+else (non)
+  :Logger "chambre non attribuée\njobs différés";
+endif
+
+' === PHASE ADMIN ===
+|🌐 SITE WEB FastAPI :8000|
+:Admin ouvre http://127.0.0.1:8000/admin;
+:Saisir login / mot de passe;
+:Consulter tableau de bord (stats);
+:Voir liste des réservations;
+:Attribuer numéro de chambre;
+:Changer statut → "En cours" (CHECK_IN);
+
+|🌐 SITE WEB FastAPI :8000|
+:PATCH /api/admin/reservations/{id}\n{statut: "En cours", numero: "101"};
+
+|🗄️ SQLite DB|
+:UPDATE reservations SET statut='En cours', numero='101';
+
+|🌐 SITE WEB FastAPI :8000|
+:Webhook CHECK_IN → 127.0.0.1:8001;
+
+|⚙️ PASSERELLE :8001|
+:Réception CHECK_IN;
+:annuler_jobs(ref) → cancel job pré-refroidissement;
+:demarrage_immediat(ref, "101");
+
+|🎮 SIMULATEUR YABE|
+:Write BACnet AnalogOutput[1] = 23.0°C;
+:Write BACnet MultiStateValue[1] = 2 (Froid);
+:Write BACnet BinaryOutput[1] = ON;
+:Afficher objet mis à jour dans YABE;
+
+' === CHECKOUT ===
+|🌐 SITE WEB FastAPI :8000|
+:Admin change statut → "Terminée" (CHECK_OUT);
+
+|🗄️ SQLite DB|
+:UPDATE reservations SET statut='Terminée';
+
+|🌐 SITE WEB FastAPI :8000|
+:Webhook CHECK_OUT → 127.0.0.1:8001;
+
+|⚙️ PASSERELLE :8001|
+:arret_immediat(ref, "101");
+:Attendre 10 minutes;
+
+|🎮 SIMULATEUR YABE|
+:Write BACnet BinaryOutput[1] = OFF;
+:Climatisation simulée arrêtée;
+
+|🗄️ SQLite DB|
+:Réservation archivée\nstatut = Terminée;
+
+stop
+
+@enduml
+
+'===================================================================
+
+@startuml Diagramme_Cas_Utilisation_Krystal_Palace
+title Diagramme de Cas d'Utilisation\nKrystal Palace Hôtel Yaoundé
+
+skinparam backgroundColor #0D0D0D
+skinparam usecaseBackgroundColor #1E1E16
+skinparam usecaseBorderColor #C9A84C
+skinparam usecaseArrowColor #C9A84C
+skinparam usecaseFontColor #F7F3EA
+skinparam actorBackgroundColor #2A2A1E
+skinparam actorBorderColor #C9A84C
+skinparam actorFontColor #F7F3EA
+skinparam titleFontColor #C9A84C
+skinparam titleFontSize 15
+skinparam rectangleBackgroundColor #0D0D0D
+skinparam rectangleBorderColor #C9A84C
+skinparam rectangleFontColor #C9A84C
+
+actor "🧳 Client Hôtel" as CLIENT
+actor "🔑 Administrateur" as ADMIN
+actor "⚙️ Passerelle\nBACnet :8001" as GW
+actor "🎮 Simulateur\nYABE :47808" as YABE
+actor "🗄️ SQLite\nDB Browser" as DB
+
+rectangle "Système Krystal Palace Hôtel Yaoundé" {
+
+  rectangle "🌐  Interface Client — GET /  (port 8000)" {
+    usecase "UC01\nVisualiser les offres\n(chambres & tarifs)" as UC01
+    usecase "UC02\nChoisir type de chambre\n(Standard · Sup. · Suite)" as UC02
+    usecase "UC03\nSélectionner les dates\n(arrivée / départ)" as UC03
+    usecase "UC04\nRenseigner son identité\n(CNI · Nom · Tél · Email)" as UC04
+    usecase "UC05\nConfirmer la réservation\nPOST /api/reserver" as UC05
+    usecase "UC06\nRecevoir confirmation\n(Réf + Total FCFA)" as UC06
+  }
+
+  rectangle "🔑  Interface Admin — GET /admin  (port 8000)" {
+    usecase "UC07\nSe connecter\n(admin / krystal2024)" as UC07
+    usecase "UC08\nConsulter tableau de bord\n(nb clients, réservations,\nen cours)" as UC08
+    usecase "UC09\nGérer les clients\n(Lister · Créer · Supprimer)" as UC09
+    usecase "UC10\nGérer les réservations\n(Lister · Modifier · Supprimer)" as UC10
+    usecase "UC11\nAttribuer numéro de chambre\n(PATCH statut + numero)" as UC11
+    usecase "UC12\nValider Check-In\n(statut → En cours)" as UC12
+    usecase "UC13\nValider Check-Out\n(statut → Terminée)" as UC13
+    usecase "UC14\nAnnuler une réservation\n(statut → Annulée)" as UC14
+  }
+
+  rectangle "⚙️  Passerelle BACnet — port 8001" {
+    usecase "UC15\nRecevoir webhook\nRESERVATION_CONFIRMEE" as UC15
+    usecase "UC16\nPlanifier job\npré-refroidissement (J-30min)" as UC16
+    usecase "UC17\nRecevoir webhook CHECK_IN\n→ Démarrage immédiat clim" as UC17
+    usecase "UC18\nRecevoir webhook CHECK_OUT\n→ Arrêt différé (10 min)" as UC18
+    usecase "UC19\nRecevoir webhook ANNULATION\n→ Supprimer jobs planifiés" as UC19
+    usecase "UC20\nCommande BACnet/IP\nWrite Property (AO/BO/MV)" as UC20
+    usecase "UC21\nDiagnostic /health\n(jobs en cours + YABE)" as UC21
+    usecase "UC22\nTest manuel\n/test/demarrer ou /arreter" as UC22
+  }
+
+  rectangle "🗄️  SQLite (DB Browser)" {
+    usecase "UC23\nStockage clients\n(INSERT / UPDATE / SELECT)" as UC23
+    usecase "UC24\nStockage réservations\n(INSERT / UPDATE / SELECT)" as UC24
+    usecase "UC25\nVue v_reservations_detail\n(JOIN clients + reservations)" as UC25
+  }
+}
+
+' Acteur Client
+CLIENT --> UC01
+CLIENT --> UC02
+CLIENT --> UC03
+CLIENT --> UC04
+CLIENT --> UC05
+CLIENT --> UC06
+
+' Acteur Admin
+ADMIN --> UC07
+ADMIN --> UC08
+ADMIN --> UC09
+ADMIN --> UC10
+ADMIN --> UC11
+ADMIN --> UC12
+ADMIN --> UC13
+ADMIN --> UC14
+
+' Acteur Passerelle
+GW --> UC15
+GW --> UC16
+GW --> UC17
+GW --> UC18
+GW --> UC19
+GW --> UC20
+GW --> UC21
+GW --> UC22
+
+' Relations d'inclusion (déclenchements automatiques)
+UC05 ..> UC15 : <<include>>\nwebhook async
+UC12 ..> UC17 : <<include>>\nwebhook async
+UC13 ..> UC18 : <<include>>\nwebhook async
+UC14 ..> UC19 : <<include>>\nwebhook async
+UC11 ..> UC16 : <<extend>>\nsi chambre attribuée
+
+UC15 ..> UC16 : <<include>>
+UC16 ..> UC20 : <<include>>
+UC17 ..> UC20 : <<include>>
+UC18 ..> UC20 : <<include>>
+
+' BACnet → YABE
+UC20 --> YABE : BACnet/IP UDP 47808\nWrite AO/BO/MV
+
+' SQLite
+UC05 ..> UC23 : <<include>>
+UC05 ..> UC24 : <<include>>
+UC08 ..> UC25 : <<include>>
+UC09 ..> UC23 : <<include>>
+UC10 ..> UC24 : <<include>>
+
+UC23 --> DB
+UC24 --> DB
+UC25 --> DB
+
+@enduml

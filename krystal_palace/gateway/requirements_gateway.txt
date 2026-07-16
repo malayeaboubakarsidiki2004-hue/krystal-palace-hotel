@@ -1,0 +1,13 @@
+# ══════════════════════════════════════════════════════════════════════════════
+# requirements_gateway.txt — Passerelle BACnet/IP
+# Krystal Palace Hôtel Yaoundé v7.0
+# Installer : pip install -r requirements_gateway.txt
+# ══════════════════════════════════════════════════════════════════════════════
+
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+bacpypes3==0.0.67
+apscheduler==3.10.4
+httpx==0.27.0
+psycopg2-binary==2.9.9
+python-dotenv==1.0.1

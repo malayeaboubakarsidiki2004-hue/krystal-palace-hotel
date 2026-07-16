@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  DIAGRAMME D'ACTIVITÉ — Krystal Palace Hôtel Yaoundé
+  Fichier Draw.io
+  Import : app.diagrams.net → File → Import from → Device
+-->
+<mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1"
+              pageWidth="1654" pageHeight="1169" background="#0D0D0D">
+  <root>
+    <mxCell id="0"/><mxCell id="1" parent="0"/>
+
+    <!-- TITRE -->
+    <mxCell id="titre" value="&lt;b&gt;Diagramme d'Activité — Cycle de vie d'une réservation&lt;/b&gt;&lt;br&gt;Krystal Palace Hôtel Yaoundé · Check-In → Check-Out"
+            style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=15;fontColor=#C9A84C;fontStyle=1;"
+            vertex="1" parent="1">
+      <mxGeometry x="200" y="15" width="1200" height="50" as="geometry"/>
+    </mxCell>
+
+    <!-- ══ SWIMLANES ══ -->
+    <mxCell id="sl_client" value="🧳 CLIENT" style="swimlane;startSize=30;fillColor=#161610;strokeColor=#C9A84C;fontColor=#C9A84C;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="30"  y="70" width="220" height="1050" as="geometry"/>
+    </mxCell>
+    <mxCell id="sl_web" value="🌐 SITE WEB FastAPI :8000" style="swimlane;startSize=30;fillColor=#0D2010;strokeColor=#4CAF50;fontColor=#4CAF50;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="260" y="70" width="260" height="1050" as="geometry"/>
+    </mxCell>
+    <mxCell id="sl_db" value="🗄️ SQLite DB" style="swimlane;startSize=30;fillColor=#0A1A30;strokeColor=#4488FF;fontColor=#88AAFF;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="530" y="70" width="220" height="1050" as="geometry"/>
+    </mxCell>
+    <mxCell id="sl_gw" value="⚙️ PASSERELLE :8001" style="swimlane;startSize=30;fillColor=#201000;strokeColor=#D6A020;fontColor=#D6A020;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="760" y="70" width="240" height="1050" as="geometry"/>
+    </mxCell>
+    <mxCell id="sl_yabe" value="🎮 SIMULATEUR YABE" style="swimlane;startSize=30;fillColor=#200010;strokeColor=#CC2244;fontColor=#CC2244;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1010" y="70" width="220" height="1050" as="geometry"/>
+    </mxCell>
+
+    <!-- ══ STYLE COMMUN ══ -->
+    <!-- Nœuds d'action -->
+    <!-- CLIENT actions -->
+    <mxCell id="start" value="" style="ellipse;fillColor=#C9A84C;strokeColor=#8B6914;aspect=fixed;" vertex="1" parent="sl_client">
+      <mxGeometry x="90" y="50" width="30" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="a1" value="Accéder à&#xa;http://127.0.0.1:8000" style="rounded=1;fillColor=#1E1E16;strokeColor=#C9A84C;fontColor=#F7F3EA;fontSize=9;" vertex="1" parent="sl_client">
+      <mxGeometry x="30" y="100" width="160" height="40" as="geometry"/>
+    </mxCell>
+    <mxCell id="a2" value="Choisir type de chambre&#xa;+ dates arrivée/départ" style="rounded=1;fillColor=#1E1E16;strokeColor=#C9A84C;fontColor=#F7F3EA;fontSize=9;" vertex="1" parent="sl_client">
+      <mxGeometry x="30" y="165" width="160" height="40" as="geometry"/>
+    </mxCell>
+    <mxCell id="a3" value="Saisir identité&#xa;(Nom, CNI, Tél, Email)" style="rounded=1;fillColor=#1E1E16;strokeColor=#C9A84C;fontColor=#F7F3EA;fontSize=9;" vertex="1" parent="sl_client">
+      <mxGeometry x="30" y="230" width="160" height="40" as="geometry"/>
+    </mxCell>
+    <mxCell id="a4" value="Cliquer « Confirmer »" style="rounded=1;fillColor=#1E1E16;strokeColor=#C9A84C;fontColor=#F7F3EA;fontSize=9;" vertex="1" parent="sl_client">
+      <mxGeometry x="30" y="295" width="160" height="35" as="geometry"/>
+    </mxCell>
+    <mxCell id="a5" value="✅ Voir confirmation&#xa;+ Référence RES-XXXX&#xa;+ Télécharger Facture PDF" style="rounded=1;fillColor=#2A2A1E;strokeColor=#C9A84C;fontColor=#E8C97A;fontSize=9;fontStyle=1;" vertex="1" parent="sl_client">
+      <mxGeometry x="25" y="500" width="170" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_arrive" value="Se présente à l'accueil&#xa;(CNI + Référence)" style="rounded=1;fillColor=#1E1E16;strokeColor=#C9A84C;fontColor=#F7F3EA;fontSize=9;" vertex="1" parent="sl_client">
+      <mxGeometry x="30" y="610" width="160" height="40" as="geometry"/>
+    </mxCell>
+    <mxCell id="a_quitte" value="Quitte l'hôtel&#xa;(Check-Out)" style="rounded=1;fillColor=#1E1E16;strokeColor=#C9A84C;fontColor=#F7F3EA;fontSize=9;" vertex="1" parent="sl_client">
+      <mxGeometry x="30" y="870" width="160" height="40" as="geometry"/>
+    </mxCell>
+
+    <!-- WEB actions -->
+    <mxCell id="w1" value="Calculer nuits + total FCFA&#xa;Validation Pydantic" style="rounded=1;fillColor=#1E1E16;strokeColor=#4CAF50;fontColor=#90EE90;fontSize=9;" vertex="1" parent="sl_web">
+      <mxGeometry x="30" y="295" width="200" height="40" as="geometry"/>
+    </mxCell>
+    <mxCell id="w_dec" value="Données&#xa;valides ?" style="rhombus;fillColor=#1A2A10;strokeColor=#4CAF50;fontColor=#90EE90;fontSize=9;" vertex="1" parent="sl_web">
+      <mxGeometry x="80" y="355" width="90" height="60" as="geometry"/>
+    </mxCell>
+    <mxCell id="w2" value="Retourner {ref, total, nuits}&#xa;+ déclencher webhook async" style="rounded=1;fillColor=#1E1E16;strokeColor=#4CAF50;fontColor=#90EE90;fontSize=9;" vertex="1" parent="sl_web">
+      <mxGeometry x="30" y="450" width="200" height="40" as="geometry"/>
+    </mxCell>
+    <mxCell id="w_err" value="HTTP 400&#xa;Erreur validation" style="rounded=1;fillColor=#3A0A0A;strokeColor=#E74C3C;fontColor=#FF8888;fontSize=9;" vertex="1" parent="sl_web">
+      <mxGeometry x="148" y="355" width="100" height="40" as="geometry"/>
+    </mxCell>
+    <mxCell id="w3" value="Admin : GET /admin&#xa;Tableau de bord" style="rounded=1;fillColor=#1E1E16;strokeColor=#4CAF50;fontColor=#90EE90;fontSize=9;" vertex="1" parent="sl_web">
+      <mxGeometry x="30" y="610" width="200" height="35" as="geometry"/>
+    </mxCell>
+    <mxCell id="w4" value="PATCH /api/admin/reservations/{id}&#xa;statut → 'En cours' + n° chambre" style="rounded=1;fillColor=#1E1E16;strokeColor=#C9A84C;fontColor=#E8C97A;fontSize=9;" vertex="1" parent="sl_web">
+      <mxGeometry x="30" y="680" width="200" height="40" as="geometry"/>
+    </mxCell>
+    <mxCell id="w5" value="Webhook CHECK_IN → :8001" style="rounded=1;fillColor=#1E1E16;strokeColor=#D6A020;fontColor=#FFD060;fontSize=9;dashed=1;" vertex="1" parent="sl_web">
+      <mxGeometry x="30" y="740" width="200" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="w6" value="PATCH statut → 'Terminée'&#xa;Webhook CHECK_OUT → :8001" style="rounded=1;fillColor=#1E1E16;strokeColor=#D6A020;fontColor=#FFD060;fontSize=9;" vertex="1" parent="sl_web">
+      <mxGeometry x="30" y="870" width="200" height="40" as="geometry"/>
+    </mxCell>
+
+    <!-- DB actions -->
+    <mxCell id="db1" value="INSERT clients (ON CONFLICT → UPDATE)&#xa;INSERT reservations&#xa;statut = 'Confirmée'" style="rounded=1;fillColor=#0A1A30;strokeColor=#4488FF;fontColor=#88AAFF;fontSize=9;" vertex="1" parent="sl_db">
+      <mxGeometry x="20" y="420" width="180" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="db2" value="UPDATE reservations&#xa;SET statut='En cours'&#xa;SET numero='XXX'" style="rounded=1;fillColor=#0A1A30;strokeColor=#4488FF;fontColor=#88AAFF;fontSize=9;" vertex="1" parent="sl_db">
+      <mxGeometry x="20" y="690" width="180" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="db3" value="UPDATE reservations&#xa;SET statut='Terminée'" style="rounded=1;fillColor=#0A1A30;strokeColor=#4488FF;fontColor=#88AAFF;fontSize=9;" vertex="1" parent="sl_db">
+      <mxGeometry x="20" y="880" width="180" height="40" as="geometry"/>
+    </mxCell>
+
+    <!-- PASSERELLE actions -->
+    <mxCell id="gw1" value="Réception webhook&#xa;RESERVATION_CONFIRMEE" style="rounded=1;fillColor=#201000;strokeColor=#D6A020;fontColor=#FFD060;fontSize=9;" vertex="1" parent="sl_gw">
+      <mxGeometry x="25" y="500" width="190" height="40" as="geometry"/>
+    </mxCell>
+    <mxCell id="gw_dec" value="N° chambre&#xa;attribué ?" style="rhombus;fillColor=#2A1A00;strokeColor=#D6A020;fontColor=#FFD060;fontSize=9;" vertex="1" parent="sl_gw">
+      <mxGeometry x="70" y="560" width="90" height="60" as="geometry"/>
+    </mxCell>
+    <mxCell id="gw2" value="Planifier job&#xa;Démarrage J-30min&#xa;Arrêt J+10min" style="rounded=1;fillColor=#201000;strokeColor=#D6A020;fontColor=#FFD060;fontSize=9;" vertex="1" parent="sl_gw">
+      <mxGeometry x="20" y="645" width="130" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="gw_nodiff" value="Logger : jobs&#xa;différés" style="rounded=1;fillColor=#201000;strokeColor=#888;fontColor=#888;fontSize=9;" vertex="1" parent="sl_gw">
+      <mxGeometry x="162" y="558" width="70" height="40" as="geometry"/>
+    </mxCell>
+    <mxCell id="gw3" value="Réception CHECK_IN&#xa;annuler_jobs(ref)&#xa;demarrage_immediat()" style="rounded=1;fillColor=#201000;strokeColor=#D6A020;fontColor=#FFD060;fontSize=9;" vertex="1" parent="sl_gw">
+      <mxGeometry x="25" y="750" width="190" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="gw4" value="Réception CHECK_OUT&#xa;arret_immediat() +10min" style="rounded=1;fillColor=#201000;strokeColor=#D6A020;fontColor=#FFD060;fontSize=9;" vertex="1" parent="sl_gw">
+      <mxGeometry x="25" y="880" width="190" height="40" as="geometry"/>
+    </mxCell>
+
+    <!-- YABE actions -->
+    <mxCell id="y1" value="Job pré-refroidissement&#xa;AO=22°C · BO=ON · MV=Froid" style="rounded=1;fillColor=#200010;strokeColor=#CC2244;fontColor=#FF8899;fontSize=9;" vertex="1" parent="sl_yabe">
+      <mxGeometry x="20" y="660" width="180" height="40" as="geometry"/>
+    </mxCell>
+    <mxCell id="y2" value="WriteProperty BACnet/IP&#xa;AO=23°C · BO=ON · MV=Froid&#xa;Chambre climatisée ✅" style="rounded=1;fillColor=#200010;strokeColor=#CC2244;fontColor=#FF8899;fontSize=9;" vertex="1" parent="sl_yabe">
+      <mxGeometry x="20" y="760" width="180" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="y3" value="WriteProperty BACnet/IP&#xa;BO=OFF · Climatisation OFF ❌" style="rounded=1;fillColor=#200010;strokeColor=#CC2244;fontColor=#FF8899;fontSize=9;" vertex="1" parent="sl_yabe">
+      <mxGeometry x="20" y="890" width="180" height="40" as="geometry"/>
+    </mxCell>
+
+    <!-- END -->
+    <mxCell id="end" value="" style="ellipse;fillColor=#C9A84C;strokeColor=#8B6914;aspect=fixed;" vertex="1" parent="sl_db">
+      <mxGeometry x="85" y="990" width="30" height="30" as="geometry"/>
+    </mxCell>
+
+    <!-- ══ FLÈCHES ══ -->
+    <mxCell id="f1" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#C9A84C;" edge="1" source="start"  target="a1"    parent="sl_client"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f2" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#C9A84C;" edge="1" source="a1"    target="a2"    parent="sl_client"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f3" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#C9A84C;" edge="1" source="a2"    target="a3"    parent="sl_client"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f4" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#C9A84C;" edge="1" source="a3"    target="a4"    parent="sl_client"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f5" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#C9A84C;" edge="1" source="a4"    target="w1"    parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f6" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#4CAF50;" edge="1" source="w1"    target="w_dec" parent="sl_web"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f7" value="non" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#E74C3C;fontColor=#E74C3C;fontSize=9;" edge="1" source="w_dec" target="w_err" parent="sl_web"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f8" value="oui" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#4CAF50;fontColor=#4CAF50;fontSize=9;" edge="1" source="w_dec" target="db1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f9" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#4488FF;" edge="1" source="db1"   target="w2"    parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f10" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#4CAF50;" edge="1" source="w2"   target="a5"    parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f11" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#D6A020;dashed=1;" edge="1" source="w2" target="gw1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f12" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#D6A020;" edge="1" source="gw1" target="gw_dec" parent="sl_gw"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f13" value="oui" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#D6A020;fontColor=#D6A020;fontSize=9;" edge="1" source="gw_dec" target="gw2" parent="sl_gw"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f14" value="non" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#888;fontColor=#888;fontSize=9;" edge="1" source="gw_dec" target="gw_nodiff" parent="sl_gw"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f_gw2y1" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CC2244;" edge="1" source="gw2" target="y1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f15" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#C9A84C;" edge="1" source="a5"   target="a_arrive" parent="sl_client"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f16" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#C9A84C;" edge="1" source="a_arrive" target="w3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f17" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#4CAF50;" edge="1" source="w3"   target="w4"    parent="sl_web"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f18" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#4488FF;" edge="1" source="w4"   target="db2"   parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f19" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#D6A020;" edge="1" source="w4"   target="w5"    parent="sl_web"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f20" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#D6A020;dashed=1;" edge="1" source="w5" target="gw3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f21" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CC2244;" edge="1" source="gw3" target="y2" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f22" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#C9A84C;" edge="1" source="a_quitte" target="w6" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f23" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#4488FF;" edge="1" source="w6"   target="db3"   parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f24" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#D6A020;dashed=1;" edge="1" source="w6" target="gw4" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f25" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CC2244;" edge="1" source="gw4" target="y3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="f26" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#4488FF;" edge="1" source="db3"  target="end"   parent="sl_db"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+  </root>
+</mxGraphModel>

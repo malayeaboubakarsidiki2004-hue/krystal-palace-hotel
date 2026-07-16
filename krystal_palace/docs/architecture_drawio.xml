@@ -1,0 +1,216 @@
+<mxfile host="Electron">
+  <diagram id="R_3t4i_6HyAUi4C1_YBB" name="Page-1">
+    <mxGraphModel dx="2032" dy="1222" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1200" background="#0A0A0A" math="0" shadow="1">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="titre" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=15;fontColor=#E8C97A;fontStyle=1;" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;&lt;font style=&quot;color: light-dark(rgb(136, 170, 255), rgb(0, 0, 0)); font-size: 19px;&quot;&gt;&lt;u style=&quot;&quot;&gt;Architecture Système PMS-GTC du Krystal Palace Hôtel Yaoundé&lt;/u&gt;&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="35" width="1300" x="295" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="z_act" parent="1" style="swimlane;startSize=30;fillColor=#110A00;strokeColor=#E8650A;fontColor=#E8650A;fontStyle=5;fontSize=11;fontFamily=Times New Roman;" value="ACCÈS CLIENTS &amp; ADMIN" vertex="1">
+          <mxGeometry height="410" width="190" x="90" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="smartphone" parent="z_act" style="shape=mxgraph.android.phone2;strokeColor=#E8650A;fillColor=#1A0F00;fontColor=light-dark(#FDF0CC,#2A1F00);fontStyle=1;fontSize=9;fontFamily=Times New Roman;" value="Client Hôtel &#xa;Smartphone / PC&#xa;http://....:8000" vertex="1">
+          <mxGeometry height="110" width="63" x="62" y="187" as="geometry" />
+        </mxCell>
+        <mxCell id="admin_pc" parent="z_act" style="shape=mxgraph.cisco.computers_and_peripherals.workstation;strokeColor=#C9A84C;fillColor=#241500;fontColor=light-dark(#E8C97A, #0d0a02);fontSize=9;fontStyle=1;fontFamily=Times New Roman;" value="AdministrateurAccueil Hôtel" vertex="1">
+          <mxGeometry height="90" width="80" x="59" y="311" as="geometry" />
+        </mxCell>
+        <mxCell id="pycharm" parent="z_act" style="shape=mxgraph.veeam2.veeam_repository;fillColor=#21D789;strokeColor=#0A7A50;fontColor=#FFFFFF;fontStyle=1;fontSize=9;fontFamily=Times New Roman;" value="PyCharm IDE&#xa;Développement" vertex="1">
+          <mxGeometry height="115" width="90" x="58" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="e14" edge="1" parent="z_act" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#C9A84C;dashed=1;fontColor=light-dark(#000000,#FFFFFF);fontSize=9;fontFamily=Times New Roman;fontStyle=0;labelBackgroundColor=default;strokeWidth=3;entryX=0.72;entryY=0.873;entryDx=0;entryDy=0;entryPerimeter=0;exitX=-0.01;exitY=0.438;exitDx=0;exitDy=0;exitPerimeter=0;" value="Téléchargement&#xa;PDF ">
+          <mxGeometry relative="1" x="0.1212" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="291" y="269" />
+            </Array>
+            <mxPoint x="291.05000000000007" y="271.04999999999995" as="sourcePoint" />
+            <mxPoint x="127.00000000000011" y="269.005" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="z_win" parent="1" style="swimlane;startSize=34;fillColor=#110A00;strokeColor=#E8650A;fontColor=#E8C97A;fontStyle=5;fontSize=12;fontFamily=Times New Roman;" value="PC WINDOWS — TOUTES LES APPLICATIONS SUR LA MÊME MACHINE" vertex="1">
+          <mxGeometry height="800" width="1280" x="305" y="70" as="geometry">
+            <mxRectangle height="34" width="450" x="305" y="70" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="z_web" parent="z_win" style="swimlane;startSize=28;fillColor=#0D1A05;strokeColor=#4CAF50;fontColor=#4CAF50;fontStyle=5;fontSize=11;fontFamily=Times New Roman;" value="APPLICATION WEB FastAPI — PORT 8000" vertex="1">
+          <mxGeometry height="360" width="510" x="15" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="fastapi" parent="z_web" style="shape=mxgraph.cisco.servers.standard_server;strokeColor=#4CAF50;fillColor=#0D1A05;fontColor=light-dark(#90EE90, #010901);fontStyle=1;fontSize=11;fontFamily=Times New Roman;" value="FastAPI Server " vertex="1">
+          <mxGeometry height="65" width="140" x="170" y="117.5" as="geometry" />
+        </mxCell>
+        <mxCell id="pay_sim" parent="z_web" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1A0F00;strokeColor=#E8650A;fontColor=#FF8C2A;fontStyle=1;fontSize=9;" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 11px; color: light-dark(rgb(0, 0, 0), rgb(9, 9, 9));&quot;&gt;&amp;nbsp;Simulation Paiement&lt;br&gt;Mobile Money · Carte · Espèces · Virement&lt;br&gt;→ déclenche activation HVAC YABE&lt;/font&gt;" vertex="1">
+          <mxGeometry height="40" width="210" x="275" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="facture_pdf" parent="z_web" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#241500;strokeColor=#C9A84C;fontColor=#E8C97A;fontStyle=1;fontSize=9;" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 11px; color: light-dark(rgb(0, 0, 0), rgb(9, 9, 9));&quot;&gt;Facture PDF&lt;br&gt;Téléchargement Facture_RES-XXX.pdf&lt;/font&gt;" vertex="1">
+          <mxGeometry height="40" width="195" x="29" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="ui_admin" parent="z_web" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#241500;strokeColor=#E8650A;fontColor=#E8C97A;fontStyle=1;fontSize=9;" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 11px; color: light-dark(rgb(0, 0, 0), rgb(9, 9, 9));&quot;&gt;Interface Admin&lt;br&gt;&lt;b style=&quot;&quot;&gt;templates/admin.html&lt;/b&gt;&lt;br&gt;GET /admin&lt;br&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="40" width="145" x="53" y="272" as="geometry" />
+        </mxCell>
+        <mxCell id="z_pg" parent="z_win" style="swimlane;startSize=28;fillColor=#0A1A30;strokeColor=#4488FF;fontColor=light-dark(#88AAFF, #073abb);fontStyle=5;fontSize=11;fontFamily=Times New Roman;" value="BASE DE DONNÉES — PostgreSQL (local ou cloud)" vertex="1">
+          <mxGeometry height="309" width="510" x="16" y="421" as="geometry">
+            <mxRectangle height="30" width="280" x="40" y="444" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pg_server" parent="z_pg" style="shape=mxgraph.cisco.servers.standard_server;fillColor=#0A1A30;strokeColor=#4488FF;fontColor=light-dark(#88AAFF,#040509);fontStyle=1;fontSize=10;fontFamily=Times New Roman;" value="PostgreSQL 18 _ localhost:5432 &#xa; krystal_palace - user: krystal_user" vertex="1">
+          <mxGeometry height="90" width="80" x="85" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_clients" parent="z_pg" style="shape=mxgraph.cisco.storage.tape_array;fillColor=#0A1A30;strokeColor=#4488FF;fontColor=light-dark(#88AAFF, #01050e);fontSize=10;fontFamily=Times New Roman;fontStyle=1" value="&#xa;&#xa;&#xa;&#xa;&#xa;&#xa;&#xa;&#xa;&#xa;TABLE clients" vertex="1">
+          <mxGeometry height="90" width="180" x="25" y="152" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_res" parent="z_pg" style="shape=mxgraph.cisco.storage.tape_array;fillColor=#0A1A30;strokeColor=#4488FF;fontColor=light-dark(#88AAFF,#000000);fontSize=10;fontFamily=Times New Roman;fontStyle=1" value="&#xa;&#xa;&#xa;&#xa;&#xa;&#xa;&#xa;&#xa;&#xa;&#xa;TABLE reservations" vertex="1">
+          <mxGeometry height="100" width="195" x="285" y="142" as="geometry" />
+        </mxCell>
+        <mxCell id="pg_deploy" parent="z_pg" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#162040;strokeColor=#4488FF;fontColor=#88AAFF;fontStyle=1;fontSize=9;" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 10px; color: light-dark(rgb(0, 0, 0), rgb(0, 0, 204));&quot;&gt;PRODUCTION : Railway / Render — PostgreSQL cloud automatique&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="320" x="85" y="265" as="geometry" />
+        </mxCell>
+        <mxCell id="z_gw" parent="z_win" style="swimlane;startSize=28;fillColor=#201000;strokeColor=#E8650A;fontColor=#E8650A;fontStyle=5;fontSize=11;fontFamily=Times New Roman;" value="PASSERELLE BACnet FastAPI " vertex="1">
+          <mxGeometry height="300" width="380" x="539" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="gw_server" parent="z_gw" style="shape=mxgraph.cisco.routers.router;fillColor=#201000;strokeColor=#E8650A;fontColor=light-dark(#FF8C2A, #170c03);fontStyle=1;fontSize=10;fontFamily=Times New Roman;" value="&#xa;&#xa;&#xa;Passerelle BACnet_gateway/main.py" vertex="1">
+          <mxGeometry height="100" width="95" x="150" y="84" as="geometry" />
+        </mxCell>
+        <mxCell id="scheduler" parent="z_gw" style="shape=mxgraph.cisco.routers.generic_router;fillColor=#201000;strokeColor=#E8650A;fontColor=light-dark(#FF8C2A, #040201);fontSize=10;fontStyle=1;fontFamily=Times New Roman;" value="APScheduler_scheduler.py&#xa;pré-refroid. / arrêt clim" vertex="1">
+          <mxGeometry height="39" width="120" x="10" y="221" as="geometry" />
+        </mxCell>
+        <mxCell id="bacnet_cli" parent="z_gw" style="shape=mxgraph.cisco.routers.generic_router;fillColor=#201000;strokeColor=#E8650A;fontColor=light-dark(#FF8C2A, #090501);fontSize=10;fontStyle=1;fontFamily=Times New Roman;" value="BACnet Client_bacnet_client.py&#xa;Write AO / BO / MV" vertex="1">
+          <mxGeometry height="35" width="140" x="223" y="225" as="geometry" />
+        </mxCell>
+        <mxCell id="webhooks_box" parent="z_gw" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2A1000;strokeColor=#E8650A;fontColor=#FF8C2A;fontSize=9;" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;color: light-dark(rgb(68, 136, 255), rgb(0, 0, 0));&quot;&gt;&lt;b&gt;Événements webhook reçus&lt;br&gt;RESERVATION_CONFIRMEE · CHECK_IN · CHECK_OUT · ANNULATION&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="35" width="345" x="17.5" y="41" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="z_gw" source="gw_server" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#E8650A;fontSize=9;exitX=0.324;exitY=0.961;exitDx=0;exitDy=0;exitPerimeter=0;fontFamily=Times New Roman;" target="scheduler" value="planifier">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="181" y="200" />
+              <mxPoint x="70" y="200" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="z_gw" source="gw_server" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#E8650A;fontSize=9;exitX=0.732;exitY=0.937;exitDx=0;exitDy=0;exitPerimeter=0;fontFamily=Times New Roman;" target="bacnet_cli" value="commande">
+          <mxGeometry relative="1" x="0.0089" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="220" y="200" />
+              <mxPoint x="288" y="200" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="z_gw" source="scheduler" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#E8650A;dashed=1;fontSize=9;fontFamily=Times New Roman;" target="bacnet_cli" value="job déclenche">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="z_yabe" parent="z_win" style="swimlane;startSize=28;fillColor=#200010;strokeColor=#CC2244;fontColor=light-dark(#FF6688,#FF0080);fontStyle=5;fontSize=11;fontFamily=Times New Roman;" value="SIMULATEUR BACnet/IP — YABE (Yet Another BACnet Explorer)" vertex="1">
+          <mxGeometry height="419" width="600" x="531.5" y="361" as="geometry" />
+        </mxCell>
+        <mxCell id="yabe_app" parent="z_yabe" style="shape=mxgraph.cisco.computers_and_peripherals.pc;fillColor=#200010;strokeColor=#CC2244;fontColor=light-dark(#FF6688, #100f0f);fontStyle=1;fontSize=10;fontFamily=Times New Roman;" value="YABE Application-Windows &#xa;BACnet/IP-127.0.0.1:47808 (UDP)&#xa;Device Instance : 1001" vertex="1">
+          <mxGeometry height="90" width="120" x="240" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="mfGwMmjJ5X0zO5MCOWrZ-1" edge="1" parent="z_yabe" source="yabe_device" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="bo_obj" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="yabe_device" parent="z_yabe" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2A0015;strokeColor=#CC2244;fontColor=light-dark(#FF6688,#FF0080);fontStyle=1;fontSize=10;" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 11px;&quot;&gt;Device BACnet Virtuel 1001 — KrystalPalaceHVAC · 127.0.0.1:47808&lt;/font&gt;" vertex="1">
+          <mxGeometry height="35" width="490" x="60" y="155" as="geometry" />
+        </mxCell>
+        <mxCell id="ao_obj" parent="z_yabe" style="shape=mxgraph.cisco.routers.router;fillColor=#200010;strokeColor=#CC2244;fontColor=light-dark(#FF8899,#090405);fontSize=10;fontStyle=1;fontFamily=Times New Roman;" value="&#xa;&#xa;&#xa;&#xa;Analog Output (×11) - AO[1..11]&#xa;Consigne Temp. - 19°C ou 20°C" vertex="1">
+          <mxGeometry height="100" width="120" x="30" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="bo_obj" parent="z_yabe" style="shape=mxgraph.cisco.routers.router;fillColor=#200010;strokeColor=#CC2244;fontColor=light-dark(#FF8899,#090405);fontSize=10;fontStyle=1;fontFamily=Times New Roman;" value="&#xa;&#xa;&#xa;&#xa;Binary Output (×11) - BO[1..11]&#xa;Marche / Arrêt - ON = TRUE / OFF" vertex="1">
+          <mxGeometry height="100" width="120" x="240" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="mv_obj" parent="z_yabe" style="shape=mxgraph.cisco.routers.router;fillColor=#200010;strokeColor=#CC2244;fontColor=light-dark(#FF8899, #0d0204);fontSize=10;fontStyle=1;fontFamily=Times New Roman;" value="&#xa;&#xa;&#xa;Multi-State Value (×11) - MV[1..11]&#xa;1=Auto · 2=Froid . 3=Chaud · 4=Vent." vertex="1">
+          <mxGeometry height="100" width="120" x="460" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="chambres_box" parent="z_yabe" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#a20025;strokeColor=#6F0000;fontColor=#ffffff;fontStyle=1;fontSize=10;" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 11px;&quot;&gt;11 Chambres HVAC Simulées — 101·102·103 (Standard) | 201·202·203·301·302·303 (Supérieure) | 401·402 (Suite Prestige)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="40" width="475" x="61.5" y="364" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="z_yabe" style="edgeStyle=orthogonalEdgeStyle;strokeColor=light-dark(#CC2244, #131111);">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="240" y="90" as="sourcePoint" />
+            <mxPoint x="90" y="235" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e11" edge="1" parent="z_yabe" source="yabe_app" style="edgeStyle=orthogonalEdgeStyle;strokeColor=light-dark(#CC2244, #151314);" target="bo_obj">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="300" y="140" />
+              <mxPoint x="300" y="140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e12" edge="1" parent="z_yabe" source="yabe_app" style="edgeStyle=orthogonalEdgeStyle;strokeColor=light-dark(#CC2244, #151314);" target="mv_obj">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="520" y="90" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e13" edge="1" parent="z_yabe" source="bo_obj" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CC2244;strokeWidth=2;" target="chambres_box" value="HVAC simulé">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="legende_proto" parent="z_win" style="text;html=1;strokeColor=#E8650A;fillColor=#1A0F00;align=left;whiteSpace=wrap;rounded=1;fontColor=#FDF0CC;fontSize=10;" value="&lt;div style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 11px; font-family: &amp;quot;Times New Roman&amp;quot;; background-color: transparent; color: light-dark(rgb(253, 240, 204), rgb(42, 31, 0));&quot;&gt;&lt;u&gt;PROTOCOLES&lt;/u&gt;&lt;/b&gt;&lt;/div&gt;&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 11px;&quot;&gt;&lt;font color=&quot;#E8650A&quot;&gt;━━ HTTP GET/POST (REST API)&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#C9A84C&quot;&gt;╌╌ Webhook async (paiement/statut)&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#CC2244&quot;&gt;══ BACnet/IP UDP 47808&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#4488FF&quot;&gt;━━ psycopg2 → PostgreSQL&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#21D789&quot;&gt;╌╌ PyCharm lance les serveurs&lt;/font&gt;&lt;/font&gt;&lt;div&gt;&lt;font color=&quot;#21D789&quot; style=&quot;font-size: 11px;&quot; face=&quot;Times New Roman&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px; color: light-dark(rgb(0, 0, 0), rgb(0, 0, 0));&quot; face=&quot;Times New Roman&quot;&gt;Réaliser par : MALAYE ABOUBAKAR SIDIKI&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Times New Roman&quot; style=&quot;color: light-dark(rgb(0, 0, 0), rgb(0, 0, 0));&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;Entreprise: SERM Sarl&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="140" width="235" x="1029" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="z_win" source="fastapi" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#4488FF;strokeWidth=2;fontColor=#4488FF;fontSize=8;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="pg_deploy" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="260" y="232" />
+              <mxPoint x="260" y="640" />
+              <mxPoint x="261" y="640" />
+            </Array>
+            <mxPoint x="335.07692307692287" y="280" as="sourcePoint" />
+            <mxPoint x="255" y="640" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="z_win" source="pay_sim" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#E8650A;strokeWidth=2;dashed=1;fontColor=light-dark(#CC2244,#FFF2CC);fontStyle=1;fontSize=8;fontFamily=Times New Roman;" target="gw_server" value="Webhook POST - CHECK_IN async">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="395" y="220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="smartphone" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#E8650A;strokeWidth=2;fontColor=#E8650A;fontStyle=1;fontSize=8;exitX=1.005;exitY=0.26;exitDx=0;exitDy=0;exitPerimeter=0;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="215" y="280" />
+              <mxPoint x="430" y="280" />
+            </Array>
+            <mxPoint x="177.4799999999999" y="330" as="sourcePoint" />
+            <mxPoint x="490" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="admin_pc" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#C9A84C;strokeWidth=2;fontColor=#C9A84C;fontSize=8;exitX=0.788;exitY=0.369;exitDx=0;exitDy=0;exitPerimeter=0;" target="ui_admin" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="216" y="410" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="fastapi" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#E8650A;strokeWidth=2;dashed=1;fontColor=light-dark(#E8650A,#FFFFFF);fontSize=9;fontFamily=Times New Roman;" target="gw_server" value="Webhooks HTTP :8001">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="730" y="254" />
+              <mxPoint x="730" y="254" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="bacnet_cli" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CC2244;strokeWidth=3;fontColor=light-dark(#CC2244,#FFF2CC);fontStyle=1;fontSize=9;fontFamily=Times New Roman;" target="yabe_app" value="BACnet/IP UDP 47808 - WriteProperty (AO/BO/MV)">
+          <mxGeometry relative="1" x="-0.6443" y="-7" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e15" edge="1" parent="1" source="pycharm" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#21D789;strokeWidth=2;dashed=1;fontColor=light-dark(#21D789, #f0f5f3);fontSize=9;fontFamily=Times New Roman;fontStyle=0;exitX=0.722;exitY=0.308;exitDx=0;exitDy=0;exitPerimeter=0;" target="fastapi" value="Run/Debug">
+          <mxGeometry relative="1" x="0.0001" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="213" y="195" />
+              <mxPoint x="560" y="195" />
+            </Array>
+            <mxPoint x="220" y="260" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
