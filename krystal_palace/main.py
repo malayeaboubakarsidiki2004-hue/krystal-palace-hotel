@@ -81,7 +81,7 @@ GATEWAY_URL   = os.getenv("GATEWAY_URL",   "http://127.0.0.1:8001")
 GATEWAY_TOKEN = os.getenv("GATEWAY_TOKEN", "secret-gateway-token")
 DATABASE_URL  = os.getenv(
     "DATABASE_URL",
-    "postgresql://SERM_Sarl:krystal2024@localhost:5432/krystal_palace"
+    "postgresql://krystal_user:krystal2024@localhost:5432/krystal_palace"
 )
 OM_NUMERO     = os.getenv("OM_NUMERO_RECEPTEUR", "+237655448731")
 
@@ -399,15 +399,19 @@ class EnregistrementManuel(BaseModel):
 
 TPL = Path(__file__).parent / "templates"
 
+# En développement, on évite que le navigateur mette en cache une ancienne
+# version de admin.html/client.html pendant que vous itérez dessus.
+_NO_CACHE = {"Cache-Control": "no-store, no-cache, must-revalidate"}
+
 
 @app.get("/", response_class=HTMLResponse, tags=["Pages"])
 def page_client():
-    return open(TPL / "client.html", encoding="utf-8").read()
+    return HTMLResponse(open(TPL / "client.html", encoding="utf-8").read(), headers=_NO_CACHE)
 
 
 @app.get("/admin", response_class=HTMLResponse, tags=["Pages"])
 def page_admin():
-    return open(TPL / "admin.html", encoding="utf-8").read()
+    return HTMLResponse(open(TPL / "admin.html", encoding="utf-8").read(), headers=_NO_CACHE)
 
 # ══════════════════════════════════════════════════════════════════════════════
 # API PUBLIQUE — RÉSERVATION
