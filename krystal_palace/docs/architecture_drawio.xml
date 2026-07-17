@@ -1,11 +1,11 @@
 <mxfile host="Electron">
   <diagram id="R_3t4i_6HyAUi4C1_YBB" name="Page-1">
-    <mxGraphModel dx="2032" dy="1222" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1200" background="#0A0A0A" math="0" shadow="1">
+    <mxGraphModel dx="1563" dy="940" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1200" background="#0A0A0A" math="0" shadow="1">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="titre" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=15;fontColor=#E8C97A;fontStyle=1;" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;&lt;font style=&quot;color: light-dark(rgb(136, 170, 255), rgb(0, 0, 0)); font-size: 19px;&quot;&gt;&lt;u style=&quot;&quot;&gt;Architecture Système PMS-GTC du Krystal Palace Hôtel Yaoundé&lt;/u&gt;&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;/font&gt;" vertex="1">
-          <mxGeometry height="35" width="1300" x="295" y="35" as="geometry" />
+          <mxGeometry height="35" width="1300" x="173" y="27" as="geometry" />
         </mxCell>
         <mxCell id="z_act" parent="1" style="swimlane;startSize=30;fillColor=#110A00;strokeColor=#E8650A;fontColor=#E8650A;fontStyle=5;fontSize=11;fontFamily=Times New Roman;" value="ACCÈS CLIENTS &amp; ADMIN" vertex="1">
           <mxGeometry height="410" width="190" x="90" y="70" as="geometry" />
@@ -30,7 +30,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="z_win" parent="1" style="swimlane;startSize=34;fillColor=#110A00;strokeColor=#E8650A;fontColor=#E8C97A;fontStyle=5;fontSize=12;fontFamily=Times New Roman;" value="PC WINDOWS — TOUTES LES APPLICATIONS SUR LA MÊME MACHINE" vertex="1">
-          <mxGeometry height="800" width="1280" x="305" y="70" as="geometry">
+          <mxGeometry height="800" width="1280" x="305" y="71" as="geometry">
             <mxRectangle height="34" width="450" x="305" y="70" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -38,7 +38,7 @@
           <mxGeometry height="360" width="510" x="15" y="50" as="geometry" />
         </mxCell>
         <mxCell id="fastapi" parent="z_web" style="shape=mxgraph.cisco.servers.standard_server;strokeColor=#4CAF50;fillColor=#0D1A05;fontColor=light-dark(#90EE90, #010901);fontStyle=1;fontSize=11;fontFamily=Times New Roman;" value="FastAPI Server " vertex="1">
-          <mxGeometry height="65" width="140" x="170" y="117.5" as="geometry" />
+          <mxGeometry height="65" width="140" x="187" y="117.5" as="geometry" />
         </mxCell>
         <mxCell id="pay_sim" parent="z_web" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1A0F00;strokeColor=#E8650A;fontColor=#FF8C2A;fontStyle=1;fontSize=9;" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 11px; color: light-dark(rgb(0, 0, 0), rgb(9, 9, 9));&quot;&gt;&amp;nbsp;Simulation Paiement&lt;br&gt;Mobile Money · Carte · Espèces · Virement&lt;br&gt;→ déclenche activation HVAC YABE&lt;/font&gt;" vertex="1">
           <mxGeometry height="40" width="210" x="275" y="220" as="geometry" />
@@ -46,8 +46,11 @@
         <mxCell id="facture_pdf" parent="z_web" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#241500;strokeColor=#C9A84C;fontColor=#E8C97A;fontStyle=1;fontSize=9;" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 11px; color: light-dark(rgb(0, 0, 0), rgb(9, 9, 9));&quot;&gt;Facture PDF&lt;br&gt;Téléchargement Facture_RES-XXX.pdf&lt;/font&gt;" vertex="1">
           <mxGeometry height="40" width="195" x="29" y="200" as="geometry" />
         </mxCell>
-        <mxCell id="ui_admin" parent="z_web" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#241500;strokeColor=#E8650A;fontColor=#E8C97A;fontStyle=1;fontSize=9;" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 11px; color: light-dark(rgb(0, 0, 0), rgb(9, 9, 9));&quot;&gt;Interface Admin&lt;br&gt;&lt;b style=&quot;&quot;&gt;templates/admin.html&lt;/b&gt;&lt;br&gt;GET /admin&lt;br&gt;&lt;/font&gt;" vertex="1">
-          <mxGeometry height="40" width="145" x="53" y="272" as="geometry" />
+        <mxCell id="ui_admin" parent="z_web" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#241500;strokeColor=#E8650A;fontColor=#E8C97A;fontStyle=1;fontSize=9;" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 11px; color: light-dark(rgb(0, 0, 0), rgb(9, 9, 9));&quot;&gt;Interface Admin&lt;br&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="28" width="145" x="30" y="277" as="geometry" />
+        </mxCell>
+        <mxCell id="X4iZDdvniJ-CghRivfbA-1" parent="z_web" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#241500;strokeColor=#E8650A;fontColor=#E8C97A;fontStyle=1;fontSize=9;" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 11px; color: light-dark(rgb(0, 0, 0), rgb(9, 9, 9));&quot;&gt;Interface Client&lt;br&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="28" width="145" x="29" y="145" as="geometry" />
         </mxCell>
         <mxCell id="z_pg" parent="z_win" style="swimlane;startSize=28;fillColor=#0A1A30;strokeColor=#4488FF;fontColor=light-dark(#88AAFF, #073abb);fontStyle=5;fontSize=11;fontFamily=Times New Roman;" value="BASE DE DONNÉES — PostgreSQL (local ou cloud)" vertex="1">
           <mxGeometry height="309" width="510" x="16" y="421" as="geometry">
@@ -174,10 +177,9 @@
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="215" y="280" />
-              <mxPoint x="430" y="280" />
             </Array>
             <mxPoint x="177.4799999999999" y="330" as="sourcePoint" />
-            <mxPoint x="490" y="280" as="targetPoint" />
+            <mxPoint x="350" y="280" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="e2" edge="1" parent="1" source="admin_pc" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#C9A84C;strokeWidth=2;fontColor=#C9A84C;fontSize=8;exitX=0.788;exitY=0.369;exitDx=0;exitDy=0;exitPerimeter=0;" target="ui_admin" value="">
@@ -205,7 +207,7 @@
             <mxPoint as="offset" />
             <Array as="points">
               <mxPoint x="213" y="195" />
-              <mxPoint x="560" y="195" />
+              <mxPoint x="577" y="195" />
             </Array>
             <mxPoint x="220" y="260" as="sourcePoint" />
           </mxGeometry>

@@ -228,8 +228,8 @@ select option{background:#001155;}
       <div class="p0-info" id="p0-info"></div>
       <div id="p0-restr" class="warn-banner" style="display:none;"></div>
       <div class="p0-btns">
-        <button class="btn btn-gold" onclick="nouvelleRes()">➕ Réserver à nouveau une chambre</button>
-        <button class="btn btn-blue" id="btn-mod" onclick="lancerModification()">✏️ Modifier ma réservation</button>
+        <button class="btn btn-gold" onclick="nouvelleRes()"> Réserver à nouveau une chambre</button>
+        <button class="btn btn-blue" id="btn-mod" onclick="lancerModification()"> Modifier ma réservation</button>
         <button class="btn btn-red"  id="btn-ann" onclick="lancerAnnulation()">✖ Annuler ma réservation</button>
       </div>
     </div>
@@ -241,15 +241,15 @@ select option{background:#001155;}
     <div class="sec-title">Choisissez votre chambre</div>
     <div class="room-choice">
       <button class="room-btn" onclick="choisir('Standard',this)">
-        <div><div class="room-btn-name">🛏 Chambre Standard</div><div class="room-btn-desc">Confort essentiel · Wi-Fi · Clim · TV</div></div>
+        <div><div class="room-btn-name"> Chambre Standard</div><div class="room-btn-desc">Confort essentiel · Wi-Fi · Clim · TV</div></div>
         <div class="room-btn-price">25 000<small>FCFA/nuit</small></div>
       </button>
       <button class="room-btn" onclick="choisir('Superieure',this)">
-        <div><div class="room-btn-name">🛏️ Chambre Supérieure</div><div class="room-btn-desc">Vue ville · Minibar · Baignoire · Coffre</div></div>
+        <div><div class="room-btn-name"> Chambre Supérieure</div><div class="room-btn-desc">Vue ville · Minibar · Baignoire · Coffre</div></div>
         <div class="room-btn-price">45 000<small>FCFA/nuit</small></div>
       </button>
       <button class="room-btn" onclick="choisir('Suite Prestige',this)">
-        <div><div class="room-btn-name">👑 Suite Prestige</div><div class="room-btn-desc">Salon privé · Jacuzzi · Room service 24h</div></div>
+        <div><div class="room-btn-name"> Suite Prestige</div><div class="room-btn-desc">Salon privé · Jacuzzi · Room service 24h</div></div>
         <div class="room-btn-price">95 000<small>FCFA/nuit</small></div>
       </button>
     </div>
@@ -262,7 +262,7 @@ select option{background:#001155;}
   <div class="panel" id="p2">
     <div class="sec-title" id="p2-title">Dates de séjour</div>
     <div id="p2-mod-info" class="info-banner" style="display:none;">
-      ✏️ <b>Modification :</b> Vous modifiez les dates de votre réservation <b id="p2-ref-mod"></b>. Le type de chambre ne peut pas être changé.
+       <b>Modification :</b> Vous modifiez les dates de votre réservation <b id="p2-ref-mod"></b>. Le type de chambre ne peut pas être changé.
     </div>
     <div class="grid-2">
       <div class="form-group"><label>Date d'arrivée *</label><input type="date" id="arrivee" onchange="calcTotal()"></div>
@@ -283,7 +283,7 @@ select option{background:#001155;}
   <!-- PAGE 3 : IDENTITÉ -->
   <div class="panel" id="p3">
     <div class="sec-title">Vos informations</div>
-    <div class="info-banner">ℹ️ Votre CNI ou passeport sera demandé à l'arrivée.</div>
+    <div class="info-banner"> Votre CNI ou passeport sera demandé à l'arrivée.</div>
     <div class="grid-2">
       <div class="form-group"><label>Nom *</label><input type="text" id="nom" placeholder="NOM" oninput="this.value=this.value.toUpperCase()"></div>
       <div class="form-group"><label>Prénom *</label><input type="text" id="prenom" placeholder="Prénom"></div>
@@ -305,7 +305,7 @@ select option{background:#001155;}
       <div style="font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--gold-l);margin-bottom:.4rem;">Montant à régler</div>
       <div id="pay-amt" style="font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--gold-l);margin:.4rem 0 1rem;">—</div>
       <div class="om-badge">
-        <div class="om-logo">🟠</div>
+        <div class="om-logo"></div>
         <div><div class="om-title">Orange Money — Paiement sécurisé</div>
         <div class="om-numero">+237 655 448 731<small style="font-family:'Jost',sans-serif;font-size:9px;color:var(--muted);"> — Krystal Palace</small></div></div>
       </div>
@@ -320,11 +320,11 @@ select option{background:#001155;}
       <div class="form-group">
         <label>Référence transaction Orange Money *</label>
         <input type="text" id="om-ref" class="om-ref-input" placeholder="Ex: OM241215ABCD1234" oninput="this.value=this.value.toUpperCase()">
-        <div style="font-size:9px;color:var(--muted);margin-top:4px;">📩 La référence figure dans le SMS de confirmation Orange.</div>
+        <div style="font-size:9px;color:var(--muted);margin-top:4px;"> La référence figure dans le SMS de confirmation Orange.</div>
       </div>
       <div id="err-4" class="form-error"></div>
       <div class="loader" id="ldr-4">Vérification...</div>
-      <button class="btn btn-om" onclick="validerPaiement()">✅ Confirmer le paiement Orange Money</button>
+      <button class="btn btn-om" onclick="validerPaiement()"> Confirmer le paiement Orange Money</button>
       <button class="btn btn-out" onclick="aller(3)" style="margin-top:8px;">← Retour</button>
     </div>
   </div>
@@ -332,21 +332,21 @@ select option{background:#001155;}
   <!-- PAGE 5 : CONFIRMATION -->
   <div class="panel" id="p5">
     <div class="succ-box">
-      <div class="succ-icon">💎</div>
+      <div class="succ-icon"></div>
       <div style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;color:var(--cream);" id="p5-titre">Réservation confirmée</div>
       <div class="stars" style="margin:.5rem 0;">★ ★ ★ ★ ★</div>
       <div class="succ-ref" id="p5-ref">RES-XXXXXX</div>
-      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(39,174,96,.1);border:1px solid rgba(39,174,96,.3);border-radius:6px;padding:7px 15px;font-size:11px;color:#2ECC71;margin-bottom:.9rem;" id="p5-badge">✅ Paiement Orange Money confirmé</div>
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(39,174,96,.1);border:1px solid rgba(39,174,96,.3);border-radius:6px;padding:7px 15px;font-size:11px;color:#2ECC71;margin-bottom:.9rem;" id="p5-badge"> Paiement Orange Money confirmé</div>
       <div style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:1rem;" id="p5-msg"></div>
       <div style="background:rgba(0,14,58,.95);border:1px solid rgba(0,71,255,.2);border-radius:8px;padding:1rem;margin-bottom:1rem;font-size:11px;color:var(--muted);line-height:1.9;text-align:left;" id="p5-recap"></div>
       <div class="info-banner">
-        🏨 Présentez-vous à la réception avec votre CNI.<br>
-        ⏰ Check-in à partir de 12h00 · Check-out avant 12h00.<br>
-        ❄️ La climatisation s'active automatiquement via BACnet/IP.<br>
-        📋 Référence espace client : <b style="color:var(--gold-l);" id="p5-ref2"></b>
+         Présentez-vous à la réception avec votre CNI.<br>
+         Check-in à partir de 12h00 · Check-out avant 12h00.<br>
+         La climatisation s'active automatiquement via BACnet/IP.<br>
+         Référence espace client : <b style="color:var(--gold-l);" id="p5-ref2"></b>
       </div>
-      <button class="btn btn-gold" onclick="telechargerFacture()">📄 Télécharger ma facture PDF</button>
-      <button class="btn btn-blue" onclick="showP0()" style="margin-top:8px;">🔑 Accéder à mon espace client</button>
+      <button class="btn btn-gold" onclick="telechargerFacture()"> Télécharger ma facture PDF</button>
+      <button class="btn btn-blue" onclick="showP0()" style="margin-top:8px;"> Accéder à mon espace client</button>
       <button class="btn btn-out" onclick="nouvelleRes()" style="margin-top:8px;">Nouvelle réservation</button>
     </div>
     <div class="admin-link"><a href="/admin">Accès administration</a></div>
@@ -398,7 +398,7 @@ select option{background:#001155;}
 <!-- MODAL : ANNULATION RÉUSSIE -->
 <div class="ov" id="ov-ann-ok">
   <div class="mb" style="text-align:center;">
-    <div style="font-size:44px;margin-bottom:.7rem;">✅</div>
+    <div style="font-size:44px;margin-bottom:.7rem;"></div>
     <div class="mb-title" style="text-align:center;color:var(--green);">Réservation annulée</div>
     <p style="font-size:12px;color:var(--muted);margin-bottom:1.2rem;line-height:1.7;" id="ma-ok-msg"></p>
     <button class="btn btn-gold" onclick="fermerModal('ov-ann-ok');showP0()">Retour à l'accueil</button>
@@ -500,7 +500,7 @@ function afficherP0B(d){
   if(!d.peut_modifier&&d.statut==='Confirmee')
     msgs.push('⚠ Modification indisponible : période de pénalité (moins de 3 jours avant l\'arrivée).');
   if(!d.peut_annuler&&d.statut!=='Annulee'&&d.statut!=='Terminee')
-    msgs.push('⛔ Annulation impossible : délai de 3 jours après l\'arrivée dépassé.');
+    msgs.push(' Annulation impossible : délai de 3 jours après l\'arrivée dépassé.');
   if(d.statut==='Annulee')msgs.push('Cette réservation est déjà annulée.');
   if(d.statut==='Terminee')msgs.push('Ce séjour est terminé.');
   if(msgs.length){restr.innerHTML=msgs.join('<br>');restr.style.display='block';}
@@ -663,14 +663,14 @@ async function soumettreModification(){
   // Préparer les données de facture
   const fd=v=>new Date(v+'T00:00:00').toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
   document.getElementById('p5-titre').textContent='Réservation modifiée';
-  document.getElementById('p5-badge').innerHTML='✏️ Modification confirmée';
+  document.getElementById('p5-badge').innerHTML='Modification confirmée';
   document.getElementById('p5-badge').style.color='#3A7BFF';
   document.getElementById('p5-ref').textContent=session.ref+' (MODIFIÉE)';
   document.getElementById('p5-ref2').textContent=session.ref;
   document.getElementById('p5-msg').textContent=d.message;
   document.getElementById('p5-recap').innerHTML=`
     <div style="font-size:11px;color:var(--muted);line-height:1.9;">
-    ✏️ Réservation modifiée avec succès.<br>
+    Réservation modifiée avec succès.<br>
     Nouvelles dates : <b style="color:var(--cream);">${fd(arr)}</b> → <b style="color:var(--cream);">${fd(dep)}</b><br>
     Durée : <b>${d.nuits} nuit${d.nuits>1?'s':''}</b> · Nouveau total : <b style="color:var(--gold-l);font-family:'Cormorant Garamond',serif;font-size:18px;">${d.nouveau_total.toLocaleString('fr-FR')} FCFA</b>
     </div>`;
@@ -766,8 +766,8 @@ function buildFacture(r){
     </tr></tbody>
   </table>
   <div class="ftot"><div class="ftotl">Total réglé</div><div class="ftota">${r.total.toLocaleString('fr-FR')} FCFA</div></div>
-  <div class="fpay">🟠 <b>Paiement Orange Money</b> · Réf. : <b>${r.reference_om||'—'}</b> · +237 655 448 731</div>
-  ${r.estModification?'<div class="fmod">✏️ FACTURE MODIFIÉE — Cette facture remplace la précédente suite à une modification des dates de séjour.</div>':''}
+  <div class="fpay"> <b>Paiement Orange Money</b> · Réf. : <b>${r.reference_om||'—'}</b> · +237 655 448 731</div>
+  ${r.estModification?'<div class="fmod"> FACTURE MODIFIÉE — Cette facture remplace la précédente suite à une modification des dates de séjour.</div>':''}
   <div class="fcond"><b>Conditions : </b>Annulation gratuite 3 jours avant arrivée · Au-delà : pénalité 20%/jour · Animaux non admis</div>
   <div class="ffoot">KRYSTAL PALACE HÔTEL YAOUNDÉ ★★★★★ · Avenue Kennedy · Yaoundé<br>Réf. ${r.ref} · ${r.date_emission||''}</div>
   </div>`;

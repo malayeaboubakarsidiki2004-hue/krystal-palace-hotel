@@ -621,7 +621,7 @@ async function loadRecent(){
       <td>${r.type_chambre}</td>
       <td>${fd(r.arrivee)}</td>
       <td>${r.paiement_sim
-        ?`<span class="om-ref-badge">🟠 ${(r.reference_om||'OM confirmé').substring(0,12)}</span>`
+        ?`<span class="om-ref-badge"> ${(r.reference_om||'OM confirmé').substring(0,12)}</span>`
         :'<span class="badge b-mut">En attente</span>'}</td>
       <td><span class="badge ${bc(r.statut)}">${r.statut}</span></td>
     </tr>`).join('');
@@ -633,7 +633,7 @@ async function loadRecent(){
         <div>
           <div style="font-size:13px;font-weight:500;">${r.client_nom}</div>
           <div style="font-size:10px;color:var(--muted);">Ch.${r.ref_chambre} · ${r.type_chambre} · départ ${fd(r.depart)}</div>
-          <div style="font-size:10px;color:var(--blue-l);">❄️ YABE : AO=23°C · BO=ON · MV=Froid</div>
+          <div style="font-size:10px;color:var(--blue-l);"> YABE : AO=23°C · BO=ON · MV=Froid</div>
         </div>
         <span class="badge b-ok">En cours</span>
       </div>`).join('');
@@ -704,7 +704,7 @@ function showRes(data){
     <td style="text-align:center;">${r.nuits}</td>
     <td style="color:var(--gold-l);font-weight:500;">${fcfa(r.total)}</td>
     <td>${r.paiement_sim
-      ?`<span class="om-ref-badge" title="Orange Money">🟠 ${(r.reference_om||'Confirmé').substring(0,14)}</span>`
+      ?`<span class="om-ref-badge" title="Orange Money"> ${(r.reference_om||'Confirmé').substring(0,14)}</span>`
       :'<span class="badge b-mut">En attente</span>'}</td>
     <td><span class="badge ${bc(r.statut)}">${r.statut}</span></td>
     <td class="tm">${fdt(r.cree_le)}</td>
@@ -761,7 +761,7 @@ function fiche(r){
         <div class="frow"><span class="fk">Tarif / nuit</span><span class="fv">${fcfa(Math.round(r.total/r.nuits))}</span></div>
         <div class="frow"><span class="fk">Total séjour</span><span class="fv big">${fcfa(r.total)}</span></div>
         <div class="frow"><span class="fk">Statut paiement</span><span class="fv">${r.paiement_sim
-          ?'<span class="om-ref-badge">🟠 Orange Money confirmé</span>'
+          ?'<span class="om-ref-badge"> Orange Money confirmé</span>'
           :'<span class="badge b-mut">En attente</span>'}</span></div>
         ${r.reference_om?`<div class="frow"><span class="fk">Référence OM</span><span class="fv" style="color:#FF8833;font-family:'Cormorant Garamond',serif;font-size:15px;">${r.reference_om}</span></div>`:''}
         <div class="frow"><span class="fk">Destinataire</span><span class="fv tm">+237 655 448 731</span></div>

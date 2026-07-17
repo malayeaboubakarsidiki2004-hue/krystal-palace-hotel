@@ -10,15 +10,34 @@ GRANT ALL PRIVILEGES ON DATABASE krystal_palace TO krystal_user;
 
 -- ÉTAPE 2 : se connecter à la base krystal_palace puis exécuter :
 
+-- ─────────────────────────────────────────────────────────────────────────────
+-- Table ADMINISTRATEURS (créée en premier : elle est référencée par clients
+-- et reservations pour tracer qui a fait l'enregistrement manuel / le check-in / le check-out)
+-- ─────────────────────────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS administrateurs (
+    id             SERIAL PRIMARY KEY,
+    nom            VARCHAR(100) NOT NULL,
+    prenom         VARCHAR(100) NOT NULL,
+    email          VARCHAR(150) NOT NULL UNIQUE,
+    mot_de_passe   VARCHAR(255) NOT NULL,
+    telephone      VARCHAR(25),
+    role           VARCHAR(30)  NOT NULL DEFAULT 'Receptionniste',
+    actif          BOOLEAN      NOT NULL DEFAULT TRUE,
+    cree_le        TIMESTAMP    DEFAULT NOW(),
+    dernier_login  TIMESTAMP
+);
+
 CREATE TABLE IF NOT EXISTS clients (
-    id          SERIAL PRIMARY KEY,
-    nom         VARCHAR(100) NOT NULL,
-    prenom      VARCHAR(100) NOT NULL,
-    cni         VARCHAR(50)  NOT NULL UNIQUE,
-    telephone   VARCHAR(25)  NOT NULL,
-    email       VARCHAR(150),
-    nationalite VARCHAR(80),
-    cree_le     TIMESTAMP DEFAULT NOW()
+    id             SERIAL PRIMARY KEY,
+    nom            VARCHAR(100) NOT NULL,
+    prenom         VARCHAR(100) NOT NULL,
+    cni            VARCHAR(50)  NOT NULL UNIQUE,
+    telephone      VARCHAR(25)  NOT NULL,
+    email          VARCHAR(150),
+    nationalite    VARCHAR(80),
+    -- Enregistrement manuel : admin qui a créé la fiche client à l'accueil (NULL si auto-inscription en ligne)
+    enregistre_par INTEGER REFERENCES administrateurs(id) ON DELETE SET NULL,
+    cree_le        TIMESTAMP DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS reservations (
@@ -41,6 +60,11 @@ CREATE TABLE IF NOT EXISTS reservations (
     paiement_statut   VARCHAR(50)  NOT NULL DEFAULT 'En attente',
     reference_om      VARCHAR(60),
     facture_pdf       TEXT,
+    -- Supervision du check-in / check-out par un administrateur (tableau de bord admin)
+    check_in_le       TIMESTAMP,
+    check_in_par      INTEGER REFERENCES administrateurs(id) ON DELETE SET NULL,
+    check_out_le      TIMESTAMP,
+    check_out_par     INTEGER REFERENCES administrateurs(id) ON DELETE SET NULL,
     cree_le           TIMESTAMP    DEFAULT NOW(),
     modifie_le        TIMESTAMP    DEFAULT NOW()
 );
@@ -75,6 +99,7 @@ CREATE INDEX IF NOT EXISTS idx_res_statut  ON reservations(statut);
 CREATE INDEX IF NOT EXISTS idx_res_arrivee ON reservations(arrivee);
 CREATE INDEX IF NOT EXISTS idx_res_ref     ON reservations(ref);
 CREATE INDEX IF NOT EXISTS idx_cli_cni     ON clients(cni);
+CREATE INDEX IF NOT EXISTS idx_admin_email ON administrateurs(email);
 
 -- Vérification
 SELECT table_name FROM information_schema.tables
